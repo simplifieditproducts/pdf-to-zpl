@@ -27,6 +27,15 @@
         ],
         "php-info": [
             "php -r \"phpinfo();\""
+        ],
+        "test": [
+            "./vendor/bin/phpunit tests"
+        ],
+        "generate-test-data": [
+            "php example/generateTestData.php"
         ]
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9"
     }
 }

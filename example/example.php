@@ -14,35 +14,9 @@ $settings = new ConverterSettings(
     scale: ImageScale::Cover,
 );
 $converter = new PdfToZplConverter($settings);
+$endiciaShippingLabel = $testData . "/endiciaShippingLabel.pdf";
+$pages = $converter->convertFromFile($endiciaShippingLabel);
 
-function convertEndiciaLabel() {
-    global $converter, $testData, $testOutput;
-    $endiciaShippingLabel = $testData . "/endiciaShippingLabel.pdf";
-    $pages = $converter->convertFromFile($endiciaShippingLabel);
-
-    foreach ($pages as $index => $page) {
-        assert(str_starts_with($page, "^XA^GFA,"));
-
-        $pngFile = $testOutput . "/page_{$index}.png"; 
-
-        $image = new LabelImage(zpl: $page);
-        $image->saveAs($pngFile);
-    }
+foreach ($pages as $page) {
+    assert(str_starts_with($page, "^XA^GFA,"));
 }
-
-function convertDonkeyPdf() {
-    global $converter, $testData, $testOutput;
-    $donkeyPdf = $testData . "/donkey.pdf";
-
-    $pages = $converter->convertFromFile($donkeyPdf);
-
-    foreach ($pages as $index => $page) {
-        $pngFile = $testOutput . "/donkey_{$index}.png"; 
-
-        echo "Downloading {$pngFile}";
-        $image = new LabelImage(zpl: $page);
-        $image->saveAs($pngFile);
-    }
-}
-
-// convertDonkeyPdf();
