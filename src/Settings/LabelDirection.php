@@ -8,6 +8,10 @@ enum LabelDirection {
     case Left;
     case Right;
 
+    public function default(): self {
+        return self::Up;
+    }
+
     public function toDegree(): int {
         return match ($this) {
             self::Up => 0,

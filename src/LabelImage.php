@@ -67,14 +67,14 @@ class LabelImage {
         return "data:image/png;base64," . base64_encode($this->image);
     }
 
-    /** A raw stream of the image. Can be saved to disk or uploaded */
+    /** A raw binary data of the image. Can be saved to disk or uploaded */
     public function asRaw() {
         return $this->image;
     }
 
     /**
     * Use the binary form of this image in a ZPL statement
-    * This bypassed the printer's font encoder allowing any
+    * This bypasses the printer's font encoder allowing any
     * character / font
     */
     public function toZpl(): string {

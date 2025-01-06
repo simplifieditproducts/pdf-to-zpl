@@ -24,7 +24,7 @@ class PdfToZplConverter {
     // Normal sized PDF: A4, Portrait (8.27 × 11.69 inch)
     // Desired sized PDF: prc 32k, Portrait (3.86 × 6.00 inch)
 
-    private function pdfToPrintableZpls(string $pdfData): Collection {
+    private function pdfToZpls(string $pdfData): Collection {
         return $this->pdfToImages($pdfData)
             ->map(ImageToZpl::rawImageToZpl(...));
     }
@@ -50,7 +50,7 @@ class PdfToZplConverter {
         $img->readImageBlob($pdfData);
 
         $pages = $img->getNumberImages();
-        $images = collect([]);;
+        $images = collect([]);
         for ($i = 0; $i < $pages; $i++) {
             $img->setIteratorIndex($i);
 
@@ -70,10 +70,18 @@ class PdfToZplConverter {
         return $images;
     }
 
+    /** 
+    * Convert raw PDF data into an array of ZPL commands. 
+    * Each page of the PDF is 1 ZPL command.
+    */
     public function convertFromBlob(string $pdfData): array {
-        return $this->pdfToPrintableZpls($pdfData)->toArray();
+        return $this->pdfToZpls($pdfData)->toArray();
     }
 
+    /** 
+    * Load a PDF file and convert it into an array of ZPL commands. 
+    * Each page of the PDF is 1 ZPL command.
+    */
     public function convertFromFile(string $filepath): array {
         $rawData = @file_get_contents($filepath);
         if (! $rawData) {
@@ -81,9 +89,5 @@ class PdfToZplConverter {
         }
 
         return $this->convertFromBlob($rawData);
-    }
-
-    public function test() {
-
     }
 }
