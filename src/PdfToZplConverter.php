@@ -1,11 +1,11 @@
 <?php
 
-namespace PdfToZpl; 
+namespace Faerber\PdfToZpl; 
 
 use Exception;
 use Illuminate\Support\Collection;
 
-use PdfToZpl\Settings\ConverterSettings;
+use Faerber\PdfToZpl\Settings\ConverterSettings;
 
 class PdfToZplConverter {
     const LABEL_WIDTH = 812;

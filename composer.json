@@ -5,7 +5,7 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "PdfToZpl\\": "src/"
+            "Faerber\\PdfToZpl\\": "src/"
         }
     },
     "authors": [
@@ -15,7 +15,8 @@
         }
     ],
     "require": {
-        "illuminate/collections": "^11.37"
+        "illuminate/collections": "^11.37",
+        "guzzlehttp/guzzle": "^7.9"
     },
     "extra": {
         "examples-dir": "example"

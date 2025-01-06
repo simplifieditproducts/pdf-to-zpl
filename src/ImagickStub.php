@@ -1,6 +1,6 @@
 <?php
 
-namespace PdfToZpl;
+namespace Faerber\PdfToZpl;
 
 use ReflectionClass;
 use Imagick;

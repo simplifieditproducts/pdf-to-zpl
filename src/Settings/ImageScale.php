@@ -1,6 +1,6 @@
 <?php
 
-namespace PdfToZpl\Settings;
+namespace Faerber\PdfToZpl\Settings;
 
 enum ImageScale {
     case Fill;
