@@ -14,9 +14,10 @@ $settings = new ConverterSettings(
     scale: ImageScale::Cover,
 );
 $converter = new PdfToZplConverter($settings);
-$endiciaShippingLabel = $testData . "/endiciaShippingLabel.pdf";
+$endiciaShippingLabel = $testData . "/endicia-shipping-label.pdf";
 $pages = $converter->convertFromFile($endiciaShippingLabel);
 
 foreach ($pages as $page) {
     assert(str_starts_with($page, "^XA^GFA,"));
+    echo $page . "\n\n\n";
 }
