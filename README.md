@@ -1,8 +1,12 @@
-# PDF to ZPL
+# PDF to ZPL ![Packagist Version](https://img.shields.io/packagist/v/faerber/pdf-to-zpl.svg) 
 
 Convert a PDF into the ZPL format.
 
 ## Gettings Started: 
+```
+composer require faerber/pdf-to-zpl
+```
+
 ```php
 <?php
 use Faerber\PdfToZpl\PdfToZplConverter;
