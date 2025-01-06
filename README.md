@@ -12,7 +12,7 @@ $converter = new PdfToZplConverter();
 // Get an array of ZPL commands (1 per page)
 $pages = $converter->convertFromFile("myFile.pdf");
 
-foreach ($pages as $page) {
+foreach ($pages as $index => $page) {
     // Each page is a single ZPL statement
     assert(str_starts_with($page, "^XA^GFA,"));
 }

@@ -15,45 +15,34 @@ $settings = new ConverterSettings(
 );
 $converter = new PdfToZplConverter($settings);
 
-function convertEndiciaLabel() {
+function convertPdfToPages(string $pdf, string $name) {
     global $converter, $testData, $testOutput;
-    $endiciaShippingLabel = $testData . "/endicia-shipping-label.pdf";
-    $pages = $converter->convertFromFile($endiciaShippingLabel);
+    $pdfFile = $testData . "/" . $pdf;
+    $pages = $converter->convertFromFile($pdfFile);
 
     foreach ($pages as $index => $page) {
         assert(str_starts_with($page, "^XA^GFA,"));
 
-        $pngFile = $testOutput . "/expected_label_{$index}.png"; 
-        $zplFile = $testOutput . "/expected_label_{$index}.zpl"; 
-        file_put_contents($zplFile, $page);
+        $basePath = $testOutput . "/{$name}_{$index}"; 
+        file_put_contents($basePath . ".zpl", $page);
         
-        echo "Downloading {$pngFile}\n";
+        echo "Downloading {$name} {$index}\n";
         
         $image = new LabelImage(zpl: $page);
-        $image->saveAs($pngFile);
+        $image->saveAs($basePath . ".png");
 
         // So we don't get rate limited
         sleep(5);
     }
 }
 
+
+function convertEndiciaLabel() {
+    convertPdfToPages("endicia-shipping-label.pdf", "expected_label");
+}
+
 function convertDonkeyPdf() {
-    global $converter, $testData, $testOutput;
-    $donkeyPdf = $testData . "/donkey.pdf";
-
-    $pages = $converter->convertFromFile($donkeyPdf);
-
-    foreach ($pages as $index => $page) {
-        $zplFile = $testOutput . "/expected_donkey_{$index}.zpl"; 
-        $pngFile = $testOutput . "/expected_donkey_{$index}.png"; 
-
-        file_put_contents($zplFile, $page);
-        echo "Downloading {$pngFile}\n";
-        $image = new LabelImage(zpl: $page);
-        $image->saveAs($pngFile);
-        // So we don't get rate limited
-        sleep(5);
-    }
+    convertPdfToPages("donkey.pdf", "expected_donkey");
 }
 
 function purgeOld() {

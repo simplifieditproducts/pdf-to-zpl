@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Faerber\PdfToZpl\PdfToZplConverter;
 use PHPUnit\Framework\TestCase;
 
-final class EndiciaTest extends TestCase
+final class CanConvertTest extends TestCase
 {
     private static function testData(string $filename): string
     {
@@ -17,19 +17,11 @@ final class EndiciaTest extends TestCase
         return __DIR__ . "/../test_output/{$filename}";
     }
 
-    private static function loadExpectedEndiciaOuput(): array
+    private static function loadExpectedPages(string $name, int $pageCount): array
     {
         return array_map(fn($index) => file_get_contents(
-            self::testOutput("expected_label_{$index}.zpl")), 
-            range(0, 2)
-        );
-    }
-
-    private static function loadExpectedDonkeyOutput(): array
-    {
-        return array_map(fn($index) => file_get_contents(
-            self::testOutput("expected_donkey_{$index}.zpl")), 
-            range(0, 8)
+            self::testOutput("{$name}_{$index}.zpl")), 
+            range(0, $pageCount - 1)
         );
     }
 
@@ -47,7 +39,7 @@ final class EndiciaTest extends TestCase
         // Should match the previously generated data
         $this->assertEquals(
             $pages,
-            self::loadExpectedEndiciaOuput(),
+            self::loadExpectedPages("expected_label", count($pages)),
         );
     }
 
@@ -66,7 +58,7 @@ final class EndiciaTest extends TestCase
         // Should match the previously generated data
         $this->assertEquals(
             $pages,
-            self::loadExpectedDonkeyOutput(),
+            self::loadExpectedPages("expected_donkey", count($pages)),
         );
     }
 }
