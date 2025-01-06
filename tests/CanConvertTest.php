@@ -19,8 +19,8 @@ final class CanConvertTest extends TestCase
 
     private static function loadExpectedPages(string $name, int $pageCount): array
     {
-        return array_map(fn($index) => file_get_contents(
-            self::testOutput("{$name}_{$index}.zpl")), 
+        return array_map(
+            fn($index) => file_get_contents(self::testOutput("{$name}_{$index}.zpl")), 
             range(0, $pageCount - 1)
         );
     }
@@ -49,7 +49,7 @@ final class CanConvertTest extends TestCase
         $converter = new PdfToZplConverter;
         $pages = $converter->convertFromFile(self::testData("donkey.pdf"));
 
-        // Should have 3 pages
+        // Should have 9 pages
         $this->assertEquals(
             count($pages),
             9

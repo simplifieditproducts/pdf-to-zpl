@@ -2,7 +2,7 @@
 
 Convert a PDF into the ZPL format.
 
-## Getting Started:
+## Gettings Started: 
 ```php
 <?php
 use Faerber\PdfToZpl\PdfToZplConverter;
@@ -18,10 +18,19 @@ foreach ($pages as $index => $page) {
 }
 ```
 
+## Environment Setup:
+
+Ensure you have Imagick and GD installed using:
+```
+sudo apt install php8.4-gd
+
+sudo apt install php8.4-imagick
+```
+
 ### Imagick Settings
 You may need to enable PDF permission in your Imagick settings.
 
-First edit your Imagick Policy Folder with: `nano "$(ls | grep ImageMagick)/policy.xml"`
+First edit your Imagick Policy Folder with: `cd /etc && nano "$(ls | grep ImageMagick)/policy.xml"`
 
 Find this line and ensure the rights are set to `read | write`:
 ```
@@ -31,7 +40,6 @@ Change to:
 ```
 <policy domain="coder" rights="read | write" pattern="PDF" />
 ```
-
 
 
 ## How does this work?
