@@ -2,26 +2,35 @@
 
 namespace PdfToZpl; 
 
-use App\Helpers\TestFunction;
-use App\Http\Controllers\RateShopper\Utils;
 use Exception;
 use Illuminate\Support\Collection;
+
+use PdfToZpl\Settings\ConverterSettings;
 
 class PdfToZplConverter {
     const LABEL_WIDTH = 812;
     const LABEL_HEIGHT = 1218;
     const LABEL_DPI = 203;
 
+    public ConverterSettings $settings;
+
+    public function __construct(
+        ConverterSettings|null $settings = null,
+    )
+    {
+        $this->settings = $settings ?? new ConverterSettings;
+    }
+
     // Normal sized PDF: A4, Portrait (8.27 × 11.69 inch)
     // Desired sized PDF: prc 32k, Portrait (3.86 × 6.00 inch)
 
-    private static function pdfToPrintableZpls(string $pdfData, string $scaleImage): Collection {
-        return self::pdfToImages($pdfData, $scaleImage)
+    private function pdfToPrintableZpls(string $pdfData): Collection {
+        return $this->pdfToImages($pdfData)
             ->map(ImageToZpl::rawImageToZpl(...));
     }
 
     /** Add a white background to the label */
-    private static function background(ImagickStub $img) {
+    private function background(ImagickStub $img) {
         $background = new ImagickStub();
         $pixel = new ImagickPixelStub('white');
         $background->newImage($img->getImageWidth(), $img->getImageHeight(), $pixel->inner());
@@ -35,7 +44,7 @@ class PdfToZplConverter {
         return $background;
     }
 
-    private static function pdfToImages(string $pdfData, string $scaleImage): Collection {
+    private function pdfToImages(string $pdfData): Collection {
         $img = new ImagickStub();
         $img->setResolution(self::LABEL_DPI, self::LABEL_DPI);
         $img->readImageBlob($pdfData);
@@ -47,14 +56,13 @@ class PdfToZplConverter {
 
             $img->setImageCompressionQuality(100);
 
-            $shouldScale = $scaleImage === 'fill' || $scaleImage === 'cover';
-            if ($img->getImageWidth() !== self::LABEL_WIDTH && $shouldScale) {
-                $bestFit = $scaleImage === 'cover';
-                $img->scaleImage(self::LABEL_WIDTH, self::LABEL_HEIGHT, bestfit: $bestFit);
+            $scale = $this->settings->scale;
+            if ($img->getImageWidth() !== self::LABEL_WIDTH && $scale->shouldResize()) {
+                $img->scaleImage(self::LABEL_WIDTH, self::LABEL_HEIGHT, bestfit: $scale->isBestFit());
             }
 
             $img->setImageFormat('png');
-            $background = self::background($img);
+            $background = $this->background($img);
             $images->push((string)$background);
         }
         $img->destroy();
@@ -62,16 +70,20 @@ class PdfToZplConverter {
         return $images;
     }
 
-    public function convert(string $pdfData, array $settings = []): Collection {
-        // fill or bestfit
-        $scaleImage = array_key_exists('scale', $settings)
-            ? $settings['scale']
-            : 'none';
-
-        return self::pdfToPrintableZpls($pdfData, $scaleImage);
+    public function convertFromBlob(string $pdfData): array {
+        return $this->pdfToPrintableZpls($pdfData)->toArray();
     }
 
-    public static function test() {
+    public function convertFromFile(string $filepath): array {
+        $rawData = @file_get_contents($filepath);
+        if (! $rawData) {
+            throw new Exception("File {$filepath} does not exist!");
+        }
+
+        return $this->convertFromBlob($rawData);
+    }
+
+    public function test() {
 
     }
 }

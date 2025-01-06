@@ -63,7 +63,7 @@ class ImageToZpl
      */
     private static function rawImageToGdImage(string $rawImage): GdImage
     {
-        $gdImg = imagecreatefromstring($rawImage);
+        $gdImg = \imagecreatefromstring($rawImage);
         if (! $gdImg) {
             throw new Exception("Failure!");
         }
