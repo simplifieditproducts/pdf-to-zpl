@@ -1,11 +1,11 @@
 {
-    "name": "benfaerber/pdf-to-zpl",
+    "name": "faerber/pdf-to-zpl",
     "description": "Convert a PDF file to a ZPL file",
     "type": "library",
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "BenFaerber\\PdfToZpl\\": "src/"
+            "PdfToZpl\\": "src/"
         }
     },
     "authors": [
@@ -14,5 +14,16 @@
             "email": "faerberdev@protonmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "illuminate/collections": "^11.37"
+    },
+    "extra": {
+        "examples-dir": "example"
+    },
+    "scripts": {
+        "run-example": [
+            "echo \"\n\"",
+            "php example/example.php"
+        ]
+    }
 }
