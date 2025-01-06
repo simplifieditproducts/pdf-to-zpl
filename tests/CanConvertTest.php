@@ -20,7 +20,7 @@ final class CanConvertTest extends TestCase
     private static function loadExpectedPages(string $name, int $pageCount): array
     {
         return array_map(
-            fn($index) => file_get_contents(self::testOutput("{$name}_{$index}.zpl")), 
+            fn($index) => file_get_contents(self::testOutput("{$name}_{$index}.zpl.txt")), 
             range(0, $pageCount - 1)
         );
     }

@@ -34,7 +34,7 @@ sudo apt install php8.4-imagick
 ### Imagick Settings
 You may need to enable PDF permission in your Imagick settings.
 
-First edit your Imagick Policy Folder with: `cd /etc && nano "$(ls | grep ImageMagick)/policy.xml"`
+First edit your Imagick Policy Folder with: `sudo nano "/etc/$(ls /etc/ | grep ImageMagick)/policy.xml"`
 
 Find this line and ensure the rights are set to `read | write`:
 ```

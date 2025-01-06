@@ -24,7 +24,7 @@ function convertPdfToPages(string $pdf, string $name) {
         assert(str_starts_with($page, "^XA^GFA,"));
 
         $basePath = $testOutput . "/{$name}_{$index}"; 
-        file_put_contents($basePath . ".zpl", $page);
+        file_put_contents($basePath . ".zpl.txt", $page);
         
         echo "Downloading {$name} {$index}\n";
         
