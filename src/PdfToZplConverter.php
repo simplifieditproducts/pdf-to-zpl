@@ -1,6 +1,6 @@
 <?php
 
-namespace Faerber\PdfToZpl; 
+namespace Faerber\PdfToZpl;
 
 use Exception;
 use Illuminate\Support\Collection;
@@ -70,16 +70,16 @@ class PdfToZplConverter {
         return $images;
     }
 
-    /** 
-    * Convert raw PDF data into an array of ZPL commands. 
+    /**
+    * Convert raw PDF data into an array of ZPL commands.
     * Each page of the PDF is 1 ZPL command.
     */
     public function convertFromBlob(string $pdfData): array {
         return $this->pdfToZpls($pdfData)->toArray();
     }
 
-    /** 
-    * Load a PDF file and convert it into an array of ZPL commands. 
+    /**
+    * Load a PDF file and convert it into an array of ZPL commands.
     * Each page of the PDF is 1 ZPL command.
     */
     public function convertFromFile(string $filepath): array {

@@ -18,6 +18,21 @@ foreach ($pages as $page) {
 }
 ```
 
+### Imagick Settings
+You may need to enable PDF permission in your Imagick settings.
+
+First edit your Imagick Policy Folder with: `nano "$(ls | grep ImageMagick)/policy.xml"`
+
+Find this line and ensure the rights are set to `read | write`:
+```
+<policy domain="coder" rights="none" pattern="PDF" />
+```
+Change to:
+```
+<policy domain="coder" rights="read | write" pattern="PDF" />
+```
+
+
 
 ## How does this work?
 1. Load the PDF and seperate it into pages

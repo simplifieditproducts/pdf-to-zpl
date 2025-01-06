@@ -23,7 +23,6 @@
     },
     "scripts": {
         "run-example": [
-            "echo \"\n\"",
             "php example/example.php"
         ],
         "php-info": [
