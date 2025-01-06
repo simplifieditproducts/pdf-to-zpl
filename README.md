@@ -1,4 +1,4 @@
-# PDF to ZPL
+# PDF to ZPL [!Packist](https://img.shields.io/packagist/l/faerber/pdf-to-zpl)
 
 Convert a PDF into the ZPL format.
 
@@ -44,6 +44,9 @@ Change to:
 ```
 <policy domain="coder" rights="read | write" pattern="PDF" />
 ```
+
+## Unit Testing
+Testing is done via PHP Unit. `composer install` and then use `composer test`.
 
 
 ## How does this work?
