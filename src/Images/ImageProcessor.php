@@ -12,4 +12,5 @@ interface ImageProcessor {
 
     public function readBlob(string $data);
     public function scaleImage(ConverterSettings $settings): static;
+    public function processorType(): ImageProcessorOption;
 }

@@ -58,4 +58,9 @@ class ImagickProcessor implements ImageProcessor {
         }
         return $this;
     }
+
+    public function processorType(): ImageProcessorOption
+    {
+        return ImageProcessorOption::Imagick;
+    }
 }

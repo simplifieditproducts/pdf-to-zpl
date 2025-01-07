@@ -79,4 +79,9 @@ class GdProcessor implements ImageProcessor
 
         return $this;
     }
+
+    public function processorType(): ImageProcessorOption
+    {
+        return ImageProcessorOption::Gd;
+    }
 }

@@ -1,6 +1,8 @@
 <?php
 
+use Faerber\PdfToZpl\Images\ImageProcessorOption;
 use Faerber\PdfToZpl\PdfToZplConverter;
+use Faerber\PdfToZpl\Settings\ConverterSettings;
 
 /**
  * @Revs(2)
@@ -13,9 +15,13 @@ class BenchmarkPdfConversion
         return __DIR__ . "/../test_data/{$name}";
     }
 
-    private function convertFile(string $name)
+    private function convertFile(string $name, ImageProcessorOption $processorOption)
     {
-        $converter = new PdfToZplConverter();
+        $converter = new PdfToZplConverter(
+            new ConverterSettings(
+                imageProcessorOption: $processorOption,
+            )
+        );
         $testPath = self::testFile($name);
         $converter->convertFromFile($testPath);
     }
@@ -32,26 +38,49 @@ class BenchmarkPdfConversion
     /**
      * @Subject
      */
-    public function doConvertLabel()
+    public function doConvertLabelImagick()
     {
-        $this->convertFile("endicia-shipping-label.pdf");
+        $this->convertFile("endicia-shipping-label.pdf", ImageProcessorOption::Imagick);
+    }
+
+    /**
+     * @Subject
+     */
+    public function doConvertLabelGd()
+    {
+        $this->convertFile("endicia-shipping-label.pdf", ImageProcessorOption::Gd);
+    }
+
+    /**
+     * @Subject
+     */
+    public function doConvertDonkeyImagick()
+    {
+        $this->convertFile("donkey.pdf", ImageProcessorOption::Imagick);
+    }
+
+    /**
+     * @Subject
+     */
+    public function doConvertDonkeyGd()
+    {
+        $this->convertFile("donkey.pdf", ImageProcessorOption::Gd);
+    }
+
+    /**
+     * @Subject
+     */
+    public function doConvertAmericaImagick()
+    {
+        $this->convertFile("america.pdf", ImageProcessorOption::Imagick);
     }
 
 
     /**
      * @Subject
      */
-    public function doConvertDonkey()
+    public function doConvertAmericaGd()
     {
-        $this->convertFile("donkey.pdf");
-    }
-
-
-    /**
-     * @Subject
-     */
-    public function doConvertAmerica()
-    {
-        $this->convertFile("america.pdf");
+        $this->convertFile("america.pdf", ImageProcessorOption::Gd);
     }
 }
