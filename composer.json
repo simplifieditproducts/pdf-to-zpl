@@ -4,6 +4,8 @@
     "type": "library",
     "version": "0.1.0",
     "license": "MIT",
+    "keywords": ["zebra-printers", "pdf", "zpl"],
+    "homepage": "https://github.com/benfaerber/pdf-to-zpl",
     "autoload": {
         "psr-4": {
             "Faerber\\PdfToZpl\\": "src/"
