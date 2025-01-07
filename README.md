@@ -31,10 +31,15 @@ sudo apt install php8.4-gd
 
 sudo apt install php8.4-imagick
 ```
+Then make sure to enable them in `php.ini`.
+
 
 ### Imagick Settings
 You may need to enable PDF permission in your Imagick settings.
 
+The easiest way to do this is by running the setup shell script: `sudo ./scripts/configure-imagick.sh`
+
+If the script doesn't meet your needs you can perform the change manually.
 First edit your Imagick Policy Folder with: `sudo nano "/etc/$(ls /etc/ | grep ImageMagick)/policy.xml"`
 
 Find this line and ensure the rights are set to `read | write`:
@@ -45,6 +50,8 @@ Change to:
 ```
 <policy domain="coder" rights="read | write" pattern="PDF" />
 ```
+
+I've only tested this library on Linux and Mac so if you get it working on windows feel free to open a PR!
 
 ## Unit Testing
 Testing is done via PHP Unit. `composer install` and then use `composer test`.
