@@ -58,12 +58,14 @@ abstract class Stub implements Stringable {
 
 class ImagickStub extends Stub {
     public static function className() {
+        /** @disregard intelephense(P1009) */
         return Imagick::class;
     }
 }
 
 class ImagickPixelStub extends Stub {
     public static function className() {
+        /** @disregard intelephense(P1009) */
         return ImagickPixel::class;
     }
 }
