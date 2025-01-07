@@ -24,7 +24,12 @@ function downloadPages(array $pages, string $name) {
         assert(str_starts_with($page, "^XA^GFA,"));
 
         $basePath = $testOutput . "/{$name}_{$index}";
-        file_put_contents($basePath . ".zpl.txt", $page);
+        $zplFilepath = $basePath . ".zpl.txt"; 
+        if (file_exists($zplFilepath)) {
+            continue;
+        } 
+        
+        file_put_contents($zplFilepath, $page);
 
         echo "Downloading {$name} {$index}\n";
 
@@ -39,6 +44,7 @@ function downloadPages(array $pages, string $name) {
 
 function convertPdfToPages(string $pdf, string $name)
 {
+    echo "Converting PDF {$name}\n";  
     global $converter, $testData, $testOutput;
     $pdfFile = $testData . "/" . $pdf;
     $pages = $converter->convertFromFile($pdfFile);
@@ -46,6 +52,7 @@ function convertPdfToPages(string $pdf, string $name)
 }
 
 function convertImageToPages(string $image, string $name) {
+    echo "Converting Image {$name}\n";  
     global $imageConverter, $testData, $testOutput;
     $imageFile = $testData . "/" . $image;
     $pages = $imageConverter->convertFromFile($imageFile);

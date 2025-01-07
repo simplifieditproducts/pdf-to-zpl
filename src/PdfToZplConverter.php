@@ -95,4 +95,8 @@ class PdfToZplConverter implements ZplConverter
 
         return $this->convertFromBlob($rawData);
     }
+
+    public function canConvert(): array {
+        return ["pdf"];
+    }
 }

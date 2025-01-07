@@ -8,4 +8,7 @@ interface ZplConverter {
     
     /** Convert a raw blob of binary data into a list of ZPL commands (1 per page) */
     public function convertFromBlob(string $rawData): array;
+
+    /** Get a list of extensions that this converter can convert */
+    public function canConvert(): array;
 }

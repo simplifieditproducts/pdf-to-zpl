@@ -16,16 +16,21 @@ class ConverterSettings
     /** The height in Pixels of your label */
     public readonly int $labelHeight;
 
+    /** The format to encode the image with */
+    public string $imageFormat;
+
     public function __construct(
         ImageScale $scale = ImageScale::Cover,
         int $dpi = 203,
         int $labelWidth = 812,
         int $labelHeight = 1218,
+        string $imageFormat = "png",
     ) {
         $this->scale = $scale;
         $this->dpi = $dpi;
         $this->labelWidth = $labelWidth;
         $this->labelHeight = $labelHeight;
+        $this->imageFormat = $imageFormat;
     }
 
     public static function default() {

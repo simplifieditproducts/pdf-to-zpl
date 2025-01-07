@@ -43,7 +43,7 @@ class ImageToZplConverter implements ZplConverter
                 $color = $pixel->getColor();
                 $avgColor = ($color['r'] + $color['g'] + $color['b']) / 3;
 
-                $bits .= $avgColor < 0.5 ? '1' : '0';
+                $bits .= $color['r'] < 0.5 ? '1' : '0';
             }
 
             // Convert bits to bytes
@@ -97,7 +97,7 @@ class ImageToZplConverter implements ZplConverter
         }
 
         $img->setImageColorspace(ImagickStub::constant("COLORSPACE_RGB"));
-        $img->setImageFormat("png");
+        $img->setImageFormat($this->settings->imageFormat);
         $img->thresholdImage(0.5 * ImagickStub::getQuantum());
         return $img;
     }
@@ -122,6 +122,9 @@ class ImageToZplConverter implements ZplConverter
         return $this->convertFromBlob($rawData); 
     }
 
+    public function canConvert(): array {
+        return ["png", "gif"];
+    }
 
     /** Run Line Encoder (replace repeating characters) */
     private function compressRow(string $row): string
