@@ -3,8 +3,8 @@
 use Faerber\PdfToZpl\PdfToZplConverter;
 
 /**
- * @Revs(50)
- * @Iterations(3)
+ * @Revs(1)
+ * @Iterations(1)
  */
 class BenchmarkPdfConversion {
 

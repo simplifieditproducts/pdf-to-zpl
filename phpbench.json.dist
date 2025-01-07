@@ -3,13 +3,13 @@
     "runner.bootstrap": "vendor/autoload.php",
     "runner.path": "benchmarks",
     "report.outputs": {
-         "my_csv_output": {
-             "extends": "delimited",
-             "delimiter": ","
+         "html_report": {
+             "extends": "html",
+             "title": "faerber/pdf-to-zpl Benchmark"
          }
     },
     "report.generators": {
-        "my_report": {
+        "main_report": {
             "extends": "aggregate"
         }
     }

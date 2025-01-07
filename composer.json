@@ -35,7 +35,7 @@
             "./vendor/bin/phpunit tests"
         ],
         "benchmark": [
-            "php vendor/bin/phpbench run"
+            "php vendor/bin/phpbench run --report=main_report --executor=debug --output=html_report"
         ],
         "generate-test-data": [
             "php example/generateTestData.php"
