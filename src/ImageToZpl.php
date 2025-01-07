@@ -18,7 +18,7 @@ class ImageToZpl
     const START_CMD = "^XA";
     const END_CMD = "^XZ";
 
-    private static function convertGdImageToZpl(GdImage $gdImage): string
+    public static function convertGdImageToZpl(GdImage $gdImage): string
     {
         // Width in bytes
         $width = (int) ceil(imagesx($gdImage) / 8);

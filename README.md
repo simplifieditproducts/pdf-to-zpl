@@ -54,9 +54,14 @@ Change to:
 I've only tested this library on Linux and Mac so if you get it working on windows feel free to open a PR!
 
 ## Unit Testing
-Testing is done via PHP Unit. `composer install` and then use `composer test`.
+Testing is done via PHP Unit. Run `composer test`.
+
+If you make major changes you may need to regenerate the test data.
+For example modifying scaling code where the output is correct but the test data is outdated.
+Run `composer generate-test-data` and manually verify the images are rendered correctly.
 
 ## Benchmarking
+
 
 
 ## How does this work?
