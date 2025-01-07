@@ -20,14 +20,14 @@ final class CanConvertTest extends TestCase
     private static function loadExpectedPages(string $name, int $pageCount): array
     {
         return array_map(
-            fn($index) => file_get_contents(self::testOutput("{$name}_{$index}.zpl.txt")), 
+            fn ($index) => file_get_contents(self::testOutput("{$name}_{$index}.zpl.txt")),
             range(0, $pageCount - 1)
         );
     }
 
     public function testCanConvertEndiciaPdf(): void
     {
-        $converter = new PdfToZplConverter;
+        $converter = new PdfToZplConverter();
         $pages = $converter->convertFromFile(self::testData("endicia-shipping-label.pdf"));
 
         // Should have 3 pages
@@ -46,7 +46,7 @@ final class CanConvertTest extends TestCase
 
     public function testCanConvertDonkeyPdf(): void
     {
-        $converter = new PdfToZplConverter;
+        $converter = new PdfToZplConverter();
         $pages = $converter->convertFromFile(self::testData("donkey.pdf"));
 
         // Should have 9 pages

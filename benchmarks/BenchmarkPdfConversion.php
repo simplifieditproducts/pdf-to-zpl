@@ -6,14 +6,16 @@ use Faerber\PdfToZpl\PdfToZplConverter;
  * @Revs(10)
  * @Iterations(5)
  */
-class BenchmarkPdfConversion {
-
-    public static function testFile(string $name): string {
+class BenchmarkPdfConversion
+{
+    public static function testFile(string $name): string
+    {
         return __DIR__ . "/../test_data/{$name}";
     }
 
-    private function convertFile(string $name) {
-        $converter = new PdfToZplConverter(); 
+    private function convertFile(string $name)
+    {
+        $converter = new PdfToZplConverter();
         $testPath = self::testFile($name);
         $converter->convertFromFile($testPath);
     }
@@ -24,7 +26,7 @@ class BenchmarkPdfConversion {
      */
     public function doAdd()
     {
-        $b = 1 + 2; 
+        $b = 1 + 2;
     }
 
     /**

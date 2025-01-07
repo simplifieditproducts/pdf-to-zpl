@@ -15,7 +15,8 @@ $settings = new ConverterSettings(
 );
 $converter = new PdfToZplConverter($settings);
 
-function convertPdfToPages(string $pdf, string $name) {
+function convertPdfToPages(string $pdf, string $name)
+{
     global $converter, $testData, $testOutput;
     $pdfFile = $testData . "/" . $pdf;
     $pages = $converter->convertFromFile($pdfFile);
@@ -23,11 +24,11 @@ function convertPdfToPages(string $pdf, string $name) {
     foreach ($pages as $index => $page) {
         assert(str_starts_with($page, "^XA^GFA,"));
 
-        $basePath = $testOutput . "/{$name}_{$index}"; 
+        $basePath = $testOutput . "/{$name}_{$index}";
         file_put_contents($basePath . ".zpl.txt", $page);
-        
+
         echo "Downloading {$name} {$index}\n";
-        
+
         $image = new LabelImage(zpl: $page);
         $image->saveAs($basePath . ".png");
 
@@ -37,23 +38,26 @@ function convertPdfToPages(string $pdf, string $name) {
 }
 
 
-function convertEndiciaLabel() {
+function convertEndiciaLabel()
+{
     convertPdfToPages("endicia-shipping-label.pdf", "expected_label");
 }
 
-function convertDonkeyPdf() {
+function convertDonkeyPdf()
+{
     convertPdfToPages("donkey.pdf", "expected_donkey");
 }
 
-function purgeOld() {
+function purgeOld()
+{
     global $testOutput;
     foreach (scandir($testOutput) as $file) {
         if (str_starts_with($file, ".")) {
             continue;
         }
-        
+
         unlink($testOutput . "/" . $file);
-    } 
+    }
 }
 
 purgeOld();

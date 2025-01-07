@@ -2,10 +2,9 @@
 
 namespace Faerber\PdfToZpl;
 
-use \Exception;
-use \GdImage;
+use Exception;
+use GdImage;
 use Illuminate\Support\Collection;
-
 
 /**
  * Convert an Image to Zpl
@@ -14,10 +13,12 @@ use Illuminate\Support\Collection;
  */
 class ImageToZpl
 {
-    public function __construct() {}
+    public function __construct()
+    {
+    }
 
-    const START_CMD = "^XA";
-    const END_CMD = "^XZ";
+    public const START_CMD = "^XA";
+    public const END_CMD = "^XZ";
 
     public static function convertGdImageToZpl(GdImage $gdImage): string
     {
@@ -42,7 +43,7 @@ class ImageToZpl
 
             // Convert bytes to hex and compress
             $row = (new Collection($bytes))
-                ->map(fn($byte) => sprintf('%02X', bindec($byte)))
+                ->map(fn ($byte) => sprintf('%02X', bindec($byte)))
                 ->implode('');
 
             $bitmap .= ($row === $lastRow) ? ':' : self::compressRow(preg_replace(['/0+$/', '/F+$/'], [',', '!'], $row));
@@ -53,7 +54,7 @@ class ImageToZpl
         $byteCount = $width * $height;
         $parameters = collect(['GF', 'A', $byteCount, $byteCount, $width, $bitmap]);
         $command = strtoupper($parameters->shift());
-        $parameters = $parameters->map(fn($p) => (string)$p);
+        $parameters = $parameters->map(fn ($p) => (string)$p);
 
         $dataCommand = "^" . $command . $parameters->implode(",");
         return self::START_CMD . $dataCommand . self::END_CMD;
@@ -82,7 +83,7 @@ class ImageToZpl
     /** Run Line Encoder (replace repeating characters) */
     private static function compressRow(string $row): string
     {
-        return preg_replace_callback('/(.)(\1{2,})/', fn($matches) => self::compressSequence($matches[0]), $row);
+        return preg_replace_callback('/(.)(\1{2,})/', fn ($matches) => self::compressSequence($matches[0]), $row);
     }
 
     private static function compressSequence(string $sequence): string

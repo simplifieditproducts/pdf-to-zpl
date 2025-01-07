@@ -1,6 +1,6 @@
 <?php
 
-namespace Faerber\PdfToZpl; 
+namespace Faerber\PdfToZpl;
 
 use GuzzleHttp\Client as GuzzleClient;
 use Exception;
@@ -10,7 +10,8 @@ use Faerber\PdfToZpl\Settings\LabelDirection;
  * A binary PNG image of a ZPL label.
  * You can get this from the labelary API.
  */
-class LabelImage {
+class LabelImage
+{
     private GuzzleClient $httpClient;
     public const URL = "http://api.labelary.com/v1/printers/8dpmm/labels/4x6/0/";
     public string $image;
@@ -23,7 +24,8 @@ class LabelImage {
         $this->image = $this->download();
     }
 
-    public function download(): string {
+    public function download(): string
+    {
         $headers = [
             'Accept' => 'image/png',
             'X-Rotation' => strval($this->direction->toDegree()),
@@ -46,22 +48,25 @@ class LabelImage {
         return (string)$response->getBody();
     }
 
-    private function checkImageReady() {
+    private function checkImageReady()
+    {
         if (is_null($this->image)) {
             throw new Exception("Image not downloaded yet!");
         }
-    } 
+    }
 
     /**
     * For use in HTML image tags. `<img src="{{ $label->asHtmlImage() }}" />`
     */
-    public function asHtmlImage(): string {
+    public function asHtmlImage(): string
+    {
         $this->checkImageReady();
         return "data:image/png;base64," . base64_encode($this->image);
     }
 
     /** A raw binary data of the image. Can be saved to disk or uploaded */
-    public function asRaw() {
+    public function asRaw()
+    {
         return $this->image;
     }
 
@@ -70,12 +75,14 @@ class LabelImage {
     * This bypasses the printer's font encoder allowing any
     * character / font
     */
-    public function toZpl(): string {
+    public function toZpl(): string
+    {
         return ImageToZpl::rawImageToZpl($this->asRaw());
     }
 
     /** Save the image to disk */
-    public function saveAs(string $filepath) {
+    public function saveAs(string $filepath)
+    {
         file_put_contents($filepath, $this->asRaw());
     }
 }
