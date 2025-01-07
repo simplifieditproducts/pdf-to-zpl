@@ -4,7 +4,6 @@ namespace Faerber\PdfToZpl;
 
 use Exception;
 use Faerber\PdfToZpl\Settings\ConverterSettings;
-use GdImage;
 use Illuminate\Support\Collection;
 
 /**
@@ -24,7 +23,7 @@ class ImageToZplConverter implements ZplConverter
     public const END_CMD = "^XZ";
     private const ENCODE_CMD = "^GFA";
 
-    public function convertGdImageToZpl(ImagickStub $image): string
+    public function convertImagickToZpl(ImagickStub $image): string
     {
         // Width in bytes
         $width = (int) ceil($image->getImageWidth() / 8);
@@ -39,8 +38,9 @@ class ImageToZplConverter implements ZplConverter
             for ($x = 0; $x < $image->getImageWidth(); $x++) {
                 $pixel = $image->getImagePixelColor($x, $y);
                 $color = $pixel->getColor();
+                $avgColor = ($color['r'] + $color['g'] + $color['b']) / 3;
 
-                $bits .= $color['r'] < 0.5 ? '1' : '0';
+                $bits .= $avgColor < 0.5 ? '1' : '0';
             }
 
             // Convert bits to bytes
@@ -68,6 +68,21 @@ class ImageToZplConverter implements ZplConverter
         ])->implode(''); 
     }
 
+    public function scaleImage(ImagickStub $img): ImagickStub {
+        $scale = $this->settings->scale;
+        $labelWidth = $this->settings->labelWidth;
+        $labelHeight = $this->settings->labelHeight;
+        
+        if ($img->getImageWidth() === $labelWidth) {
+            return $img;
+        } 
+        
+        if ($scale->shouldResize()) {
+            $img->scaleImage($labelWidth, $labelHeight, bestfit: $scale->isBestFit());
+        }
+        return $img;
+    }
+
     /**
      * @param string $rawImage The binary data of an image saved as a string (can be GIF, PNG or JPEG)
      */
@@ -88,7 +103,8 @@ class ImageToZplConverter implements ZplConverter
     public function rawImageToZpl(string $rawImage): string
     {
         $img = $this->rawImageToImagick($rawImage);
-        return $this->convertGdImageToZpl($img);
+        $img = $this->scaleImage($img);
+        return $this->convertImagickToZpl($img);
     }
     
     public function convertFromBlob(string $rawData): array {

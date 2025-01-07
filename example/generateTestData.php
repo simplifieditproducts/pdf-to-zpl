@@ -8,7 +8,6 @@ use Faerber\PdfToZpl\Settings\ConverterSettings;
 use Faerber\PdfToZpl\Settings\ImageScale;
 use Faerber\PdfToZpl\ImageToZpl;
 use Faerber\PdfToZpl\ImageToZplConverter;
-use Faerber\PdfToZpl\ImageToZplImagickConverter;
 
 $testData = __DIR__ . "/../test_data";
 $testOutput = __DIR__ . "/../test_output";
@@ -17,7 +16,7 @@ $settings = new ConverterSettings(
     scale: ImageScale::Cover,
 );
 $converter = new PdfToZplConverter($settings);
-$imageConverter = new ImageToZplImagickConverter($settings);
+$imageConverter = new ImageToZplConverter($settings);
 
 function downloadPages(array $pages, string $name) {
     global $testOutput; 
@@ -81,7 +80,7 @@ function purgeOld()
     }
 }
 
-purgeOld();
-convertEndiciaLabel();
+// purgeOld();
+// convertEndiciaLabel();
 // convertDonkeyPdf();
-// convertDuckImage();
+convertDuckImage();

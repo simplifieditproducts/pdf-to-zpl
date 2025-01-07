@@ -61,13 +61,8 @@ class PdfToZplConverter implements ZplConverter
             $img->setIteratorIndex($i);
 
             $img->setImageCompressionQuality(100);
-
-            $labelWidth = $this->settings->labelWidth;
-            $labelHeight = $this->settings->labelHeight;
-            $scale = $this->settings->scale;
-            if ($img->getImageWidth() !== $labelWidth && $scale->shouldResize()) {
-                $img->scaleImage($labelWidth, $labelHeight, bestfit: $scale->isBestFit());
-            }
+            
+            $this->imageConverter->scaleImage($img); 
 
             $img->setImageFormat('png');
             $background = $this->background($img);
