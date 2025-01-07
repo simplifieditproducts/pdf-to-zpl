@@ -2,12 +2,8 @@
 
 namespace Faerber\PdfToZpl;
 
-use Exception;
-use GdImage;
-use imagecreatefromstring;
-use imagepalettetotruecolor;
-use imagecolorat;
-use imagesx;
+use \Exception;
+use \GdImage;
 use Illuminate\Support\Collection;
 
 
