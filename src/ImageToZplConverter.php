@@ -24,11 +24,11 @@ class ImageToZplConverter implements ZplConverter
     public const END_CMD = "^XZ";
     private const ENCODE_CMD = "^GFA";
 
-    public function convertGdImageToZpl(GdImage $gdImage): string
+    public function convertGdImageToZpl(ImagickStub $image): string
     {
         // Width in bytes
-        $width = (int) ceil(imagesx($gdImage) / 8);
-        $height = imagesy($gdImage);
+        $width = (int) ceil($image->getImageWidth() / 8);
+        $height = $image->getImageHeight(); 
         $bitmap = '';
         $lastRow = null;
 
@@ -36,9 +36,11 @@ class ImageToZplConverter implements ZplConverter
             $bits = '';
 
             // Create a binary string for the row
-            for ($x = 0; $x < imagesx($gdImage); $x++) {
-                // 1 for black, 0 for white
-                $bits .= (imagecolorat($gdImage, $x, $y) & 0xFF) < 127 ? '1' : '0';
+            for ($x = 0; $x < $image->getImageWidth(); $x++) {
+                $pixel = $image->getImagePixelColor($x, $y);
+                $color = $pixel->getColor();
+
+                $bits .= $color['r'] < 0.5 ? '1' : '0';
             }
 
             // Convert bits to bytes
@@ -69,21 +71,24 @@ class ImageToZplConverter implements ZplConverter
     /**
      * @param string $rawImage The binary data of an image saved as a string (can be GIF, PNG or JPEG)
      */
-    private function rawImageToGdImage(string $rawImage): GdImage
+    private function rawImageToImagick(string $rawImage): ImagickStub 
     {
-        $gdImg = imagecreatefromstring($rawImage);
-        if (! $gdImg) {
-            throw new Exception("Failure!");
+        $img = new ImagickStub();
+        if (! $img->readImageBlob($rawImage)) {
+            throw new Exception("Cannot load!");
         }
-        imagepalettetotruecolor($gdImg);
-        return $gdImg;
+
+        $img->setImageColorspace(ImagickStub::constant("COLORSPACE_RGB"));
+        $img->setImageFormat("png");
+        $img->thresholdImage(0.5 * ImagickStub::getQuantum());
+        return $img;
     }
 
     /** This can just be a string (the first few bytes say if its a GIF or PNG or whatever) */
     public function rawImageToZpl(string $rawImage): string
     {
-        $gdImage = $this->rawImageToGdImage($rawImage);
-        return $this->convertGdImageToZpl($gdImage);
+        $img = $this->rawImageToImagick($rawImage);
+        return $this->convertGdImageToZpl($img);
     }
     
     public function convertFromBlob(string $rawData): array {
