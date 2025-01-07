@@ -2,6 +2,8 @@
 
 namespace Faerber\PdfToZpl\Settings;
 
+use Faerber\PdfToZpl\Images\{ImageProcessorOption, ImageProcessor};
+
 /** Settings for the PDF to ZPL conversion */
 class ConverterSettings
 {
@@ -19,18 +21,24 @@ class ConverterSettings
     /** The format to encode the image with */
     public string $imageFormat;
 
+    public ImageProcessorOption $imageProcessorOption;
+    public ImageProcessor $imageProcessor;
+
     public function __construct(
         ImageScale $scale = ImageScale::Cover,
         int $dpi = 203,
         int $labelWidth = 812,
         int $labelHeight = 1218,
         string $imageFormat = "png",
+        ImageProcessorOption $imageProcessorOption = ImageProcessorOption::Gd,
     ) {
         $this->scale = $scale;
         $this->dpi = $dpi;
         $this->labelWidth = $labelWidth;
         $this->labelHeight = $labelHeight;
         $this->imageFormat = $imageFormat;
+        $this->imageProcessorOption = $imageProcessorOption;
+        $this->imageProcessor = $this->imageProcessorOption->processor();
     }
 
     public static function default() {

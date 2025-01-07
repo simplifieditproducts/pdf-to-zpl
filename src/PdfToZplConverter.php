@@ -3,6 +3,7 @@
 namespace Faerber\PdfToZpl;
 
 use Exception;
+use Faerber\PdfToZpl\Images\ImagickProcessor;
 use Illuminate\Support\Collection;
 use Faerber\PdfToZpl\Settings\ConverterSettings;
 
@@ -56,13 +57,16 @@ class PdfToZplConverter implements ZplConverter
         $img->readImageBlob($pdfData);
 
         $pages = $img->getNumberImages();
+        
+        $processor = new ImagickProcessor($img);
+
         $images = collect([]);
         for ($i = 0; $i < $pages; $i++) {
             $img->setIteratorIndex($i);
 
             $img->setImageCompressionQuality(100);
             
-            $this->imageConverter->scaleImage($img); 
+            $processor->scaleImage($this->settings); 
 
             $img->setImageFormat('png');
             $background = $this->background($img);
