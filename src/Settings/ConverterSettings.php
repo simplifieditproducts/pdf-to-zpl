@@ -21,6 +21,7 @@ class ConverterSettings
     /** The format to encode the image with */
     public string $imageFormat;
 
+    /** Which image library to use (Imagick or GD) */
     public ImageProcessorOption $imageProcessorOption;
     public ImageProcessor $imageProcessor;
 
