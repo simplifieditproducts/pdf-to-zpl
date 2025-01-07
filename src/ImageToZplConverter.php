@@ -3,6 +3,7 @@
 namespace Faerber\PdfToZpl;
 
 use Exception;
+use Faerber\PdfToZpl\Settings\ConverterSettings;
 use GdImage;
 use Illuminate\Support\Collection;
 
@@ -11,16 +12,19 @@ use Illuminate\Support\Collection;
  *
  * @see https://github.com/himansuahm/php-zpl-converter
  */
-class ImageToZpl
+class ImageToZplConverter implements ZplConverter
 {
-    public function __construct()
+    public function __construct(
+        public ConverterSettings $settings, 
+    )
     {
     }
 
     public const START_CMD = "^XA";
     public const END_CMD = "^XZ";
+    private const ENCODE_CMD = "^GFA";
 
-    public static function convertGdImageToZpl(GdImage $gdImage): string
+    public function convertGdImageToZpl(GdImage $gdImage): string
     {
         // Width in bytes
         $width = (int) ceil(imagesx($gdImage) / 8);
@@ -46,24 +50,26 @@ class ImageToZpl
                 ->map(fn ($byte) => sprintf('%02X', bindec($byte)))
                 ->implode('');
 
-            $bitmap .= ($row === $lastRow) ? ':' : self::compressRow(preg_replace(['/0+$/', '/F+$/'], [',', '!'], $row));
+            $bitmap .= ($row === $lastRow) ? ':' : $this->compressRow(preg_replace(['/0+$/', '/F+$/'], [',', '!'], $row));
             $lastRow = $row;
         }
 
         // Prepare ZPL command parameters
         $byteCount = $width * $height;
-        $parameters = collect(['GF', 'A', $byteCount, $byteCount, $width, $bitmap]);
-        $command = strtoupper($parameters->shift());
-        $parameters = $parameters->map(fn ($p) => (string)$p);
+        $parameters = collect([$byteCount, $byteCount, $width, $bitmap]);
 
-        $dataCommand = "^" . $command . $parameters->implode(",");
-        return self::START_CMD . $dataCommand . self::END_CMD;
+        return collect([
+            self::START_CMD,
+            self::ENCODE_CMD . ",",
+            $parameters->implode(","),
+           self::END_CMD, 
+        ])->implode(''); 
     }
 
     /**
      * @param string $rawImage The binary data of an image saved as a string (can be GIF, PNG or JPEG)
      */
-    private static function rawImageToGdImage(string $rawImage): GdImage
+    private function rawImageToGdImage(string $rawImage): GdImage
     {
         $gdImg = imagecreatefromstring($rawImage);
         if (! $gdImg) {
@@ -74,19 +80,32 @@ class ImageToZpl
     }
 
     /** This can just be a string (the first few bytes say if its a GIF or PNG or whatever) */
-    public static function rawImageToZpl(string $rawImage): string
+    public function rawImageToZpl(string $rawImage): string
     {
-        $gdImage = self::rawImageToGdImage($rawImage);
-        return self::convertGdImageToZpl($gdImage);
+        $gdImage = $this->rawImageToGdImage($rawImage);
+        return $this->convertGdImageToZpl($gdImage);
     }
+    
+    public function convertFromBlob(string $rawData): array {
+        return [$this->rawImageToZpl($rawData)];
+    }
+
+    public function convertFromFile(string $filepath): array {
+        $rawData = @file_get_contents($filepath);
+        if (! $rawData) {
+            throw new Exception("Invalid file {$filepath}");
+        }
+        return $this->convertFromBlob($rawData); 
+    }
+
 
     /** Run Line Encoder (replace repeating characters) */
-    private static function compressRow(string $row): string
+    private function compressRow(string $row): string
     {
-        return preg_replace_callback('/(.)(\1{2,})/', fn ($matches) => self::compressSequence($matches[0]), $row);
+        return preg_replace_callback('/(.)(\1{2,})/', fn ($matches) => $this->compressSequence($matches[0]), $row);
     }
 
-    private static function compressSequence(string $sequence): string
+    private function compressSequence(string $sequence): string
     {
         $repeat = strlen($sequence);
         $count = '';

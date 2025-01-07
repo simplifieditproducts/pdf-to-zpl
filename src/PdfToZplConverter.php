@@ -7,14 +7,16 @@ use Illuminate\Support\Collection;
 use Faerber\PdfToZpl\Settings\ConverterSettings;
 
 /** Converts a PDF file into a list of ZPL commands */
-class PdfToZplConverter
+class PdfToZplConverter implements ZplConverter
 {
     public ConverterSettings $settings;
+    private ImageToZplConverter $imageConverter;
 
     public function __construct(
         ConverterSettings|null $settings = null,
     ) {
         $this->settings = $settings ?? new ConverterSettings();
+        $this->imageConverter = new ImageToZplConverter($this->settings);
     }
 
     // Normal sized PDF: A4, Portrait (8.27 × 11.69 inch)
@@ -23,7 +25,7 @@ class PdfToZplConverter
     private function pdfToZpls(string $pdfData): Collection
     {
         return $this->pdfToImages($pdfData)
-            ->map(ImageToZpl::rawImageToZpl(...));
+            ->map(fn ($img) => $this->imageConverter->rawImageToZpl($img));
     }
 
     /** Add a white background to the label */

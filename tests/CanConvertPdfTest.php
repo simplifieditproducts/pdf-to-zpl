@@ -1,0 +1,48 @@
+<?php
+
+declare(strict_types=1);
+
+use Faerber\PdfToZpl\PdfToZplConverter;
+use PHPUnit\Framework\TestCase;
+use TestUtils;
+
+final class CanConvertPdfTest extends TestCase
+{
+    public function testCanConvertEndiciaPdf(): void
+    {
+        $converter = new PdfToZplConverter();
+        $pages = $converter->convertFromFile(TestUtils::testData("endicia-shipping-label.pdf"));
+        $expectedPageCount = 3;
+
+        // Should have 3 pages
+        $this->assertEquals(
+            count($pages),
+            $expectedPageCount,
+        );
+
+        // Should match the previously generated data
+        $this->assertEquals(
+            $pages,
+            TestUtils::loadExpectedPages("expected_label", count($pages)),
+        );
+    }
+
+    public function testCanConvertDonkeyPdf(): void
+    {
+        $converter = new PdfToZplConverter();
+        $pages = $converter->convertFromFile(TestUtils::testData("donkey.pdf"));
+        $expectedPageCount = 9;
+
+        // Should have 9 pages
+        $this->assertEquals(
+            count($pages),
+            $expectedPageCount,
+        );
+
+        // Should match the previously generated data
+        $this->assertEquals(
+            $pages,
+            TestUtils::loadExpectedPages("expected_donkey", count($pages)),
+        );
+    }
+}

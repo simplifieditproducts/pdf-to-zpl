@@ -6,6 +6,8 @@ use Faerber\PdfToZpl\LabelImage;
 use Faerber\PdfToZpl\PdfToZplConverter;
 use Faerber\PdfToZpl\Settings\ConverterSettings;
 use Faerber\PdfToZpl\Settings\ImageScale;
+use Faerber\PdfToZpl\ImageToZpl;
+use Faerber\PdfToZpl\ImageToZplConverter;
 
 $testData = __DIR__ . "/../test_data";
 $testOutput = __DIR__ . "/../test_output";
@@ -14,13 +16,10 @@ $settings = new ConverterSettings(
     scale: ImageScale::Cover,
 );
 $converter = new PdfToZplConverter($settings);
+$imageConverter = new ImageToZplConverter($settings);
 
-function convertPdfToPages(string $pdf, string $name)
-{
-    global $converter, $testData, $testOutput;
-    $pdfFile = $testData . "/" . $pdf;
-    $pages = $converter->convertFromFile($pdfFile);
-
+function downloadPages(array $pages, string $name) {
+    global $testOutput; 
     foreach ($pages as $index => $page) {
         assert(str_starts_with($page, "^XA^GFA,"));
 
@@ -38,6 +37,22 @@ function convertPdfToPages(string $pdf, string $name)
 }
 
 
+function convertPdfToPages(string $pdf, string $name)
+{
+    global $converter, $testData, $testOutput;
+    $pdfFile = $testData . "/" . $pdf;
+    $pages = $converter->convertFromFile($pdfFile);
+    downloadPages($pages, $name);
+}
+
+function convertImageToPages(string $image, string $name) {
+    global $imageConverter, $testData, $testOutput;
+    $imageFile = $testData . "/" . $image;
+    $pages = $imageConverter->convertFromFile($imageFile);
+    downloadPages($pages, $name); 
+}
+
+
 function convertEndiciaLabel()
 {
     convertPdfToPages("endicia-shipping-label.pdf", "expected_label");
@@ -46,6 +61,11 @@ function convertEndiciaLabel()
 function convertDonkeyPdf()
 {
     convertPdfToPages("donkey.pdf", "expected_donkey");
+}
+
+function convertDuckImage()
+{
+    convertImageToPages("duck.png", "expected_duck");
 }
 
 function purgeOld()
@@ -60,6 +80,7 @@ function purgeOld()
     }
 }
 
-purgeOld();
-convertEndiciaLabel();
-convertDonkeyPdf();
+// purgeOld();
+// convertEndiciaLabel();
+// convertDonkeyPdf();
+convertDuckImage();
