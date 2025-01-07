@@ -61,8 +61,7 @@ For example modifying scaling code where the output is correct but the test data
 Run `composer generate-test-data` and manually verify the images are rendered correctly.
 
 ## Benchmarking
-
-
+Benchmarking is done via `phpbench`. Run `composer benchmark`.
 
 ## How does this work?
 1. Load the PDF and seperate it into pages
