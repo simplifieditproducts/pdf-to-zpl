@@ -8,17 +8,13 @@ use Illuminate\Support\Collection;
 use Faerber\PdfToZpl\Settings\ConverterSettings;
 
 class PdfToZplConverter {
-    const LABEL_WIDTH = 812;
-    const LABEL_HEIGHT = 1218;
-    const LABEL_DPI = 203;
-
     public ConverterSettings $settings;
 
     public function __construct(
         ConverterSettings|null $settings = null,
     )
     {
-        $this->settings = $settings ?? new ConverterSettings;
+        $this->settings = $settings ?? new ConverterSettings();
     }
 
     // Normal sized PDF: A4, Portrait (8.27 × 11.69 inch)
@@ -46,7 +42,8 @@ class PdfToZplConverter {
 
     private function pdfToImages(string $pdfData): Collection {
         $img = new ImagickStub();
-        $img->setResolution(self::LABEL_DPI, self::LABEL_DPI);
+        $dpi = $this->settings->dpi; 
+        $img->setResolution($dpi, $dpi);
         $img->readImageBlob($pdfData);
 
         $pages = $img->getNumberImages();
@@ -56,9 +53,11 @@ class PdfToZplConverter {
 
             $img->setImageCompressionQuality(100);
 
+            $labelWidth = $this->settings->labelWidth;
+            $labelHeight = $this->settings->labelHeight;
             $scale = $this->settings->scale;
-            if ($img->getImageWidth() !== self::LABEL_WIDTH && $scale->shouldResize()) {
-                $img->scaleImage(self::LABEL_WIDTH, self::LABEL_HEIGHT, bestfit: $scale->isBestFit());
+            if ($img->getImageWidth() !== $labelWidth && $scale->shouldResize()) {
+                $img->scaleImage($labelWidth, $labelHeight, bestfit: $scale->isBestFit());
             }
 
             $img->setImageFormat('png');
