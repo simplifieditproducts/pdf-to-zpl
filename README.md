@@ -56,6 +56,8 @@ I've only tested this library on Linux and Mac so if you get it working on windo
 ## Unit Testing
 Testing is done via PHP Unit. `composer install` and then use `composer test`.
 
+## Benchmarking
+
 
 ## How does this work?
 1. Load the PDF and seperate it into pages

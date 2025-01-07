@@ -34,6 +34,9 @@
         "test": [
             "./vendor/bin/phpunit tests"
         ],
+        "benchmark": [
+            "php vendor/bin/phpbench run"
+        ],
         "generate-test-data": [
             "php example/generateTestData.php"
         ]
