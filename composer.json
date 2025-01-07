@@ -25,17 +25,14 @@
         "examples-dir": "example"
     },
     "scripts": {
-        "run-example": [
-            "php example/example.php"
-        ],
-        "php-info": [
-            "php -r \"phpinfo();\""
-        ],
         "test": [
             "./vendor/bin/phpunit tests"
         ],
         "benchmark": [
-            "php vendor/bin/phpbench run --report=main_report --executor=debug --output=html_report"
+            "php vendor/bin/phpbench run --report=main_report --output=html_report"
+        ],
+        "run-example": [
+            "php example/example.php"
         ],
         "generate-test-data": [
             "php example/generateTestData.php"

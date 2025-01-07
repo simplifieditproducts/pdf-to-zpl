@@ -3,7 +3,7 @@
 use Faerber\PdfToZpl\PdfToZplConverter;
 
 /**
- * @Revs(1)
+ * @Revs(10)
  * @Iterations(1)
  */
 class BenchmarkPdfConversion {
