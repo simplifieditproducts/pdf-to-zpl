@@ -81,6 +81,7 @@ class LabelImage {
         return ImageToZpl::rawImageToZpl($this->asRaw());
     }
 
+    /** Save the image to disk */
     public function saveAs(string $filepath) {
         file_put_contents($filepath, $this->asRaw());
     }

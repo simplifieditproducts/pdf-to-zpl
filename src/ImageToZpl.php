@@ -4,7 +4,10 @@ namespace Faerber\PdfToZpl;
 
 use Exception;
 use GdImage;
+use imagecreatefromstring;
+use imagepalettetotruecolor;
 use Illuminate\Support\Collection;
+
 
 /**
  * Convert an Image to Zpl
@@ -63,7 +66,7 @@ class ImageToZpl
      */
     private static function rawImageToGdImage(string $rawImage): GdImage
     {
-        $gdImg = \imagecreatefromstring($rawImage);
+        $gdImg = imagecreatefromstring($rawImage);
         if (! $gdImg) {
             throw new Exception("Failure!");
         }
