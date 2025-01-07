@@ -1,6 +1,6 @@
 <?php
 
-namespace Faerber\PdfToZpl; 
+namespace Faerber\PdfToZpl;
 
 use Exception;
 use GdImage;
