@@ -6,6 +6,8 @@ use Exception;
 use GdImage;
 use imagecreatefromstring;
 use imagepalettetotruecolor;
+use imagecolorat;
+use imagesx;
 use Illuminate\Support\Collection;
 
 

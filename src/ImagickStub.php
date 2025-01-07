@@ -2,10 +2,10 @@
 
 namespace Faerber\PdfToZpl;
 
-use ReflectionClass;
-use Imagick;
-use ImagickPixel;
-use Stringable;
+use \ReflectionClass;
+use \Imagick;
+use \ImagickPixel;
+use \Stringable;
 
 /**
 * Forward methods onto a class

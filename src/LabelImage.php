@@ -2,14 +2,7 @@
 
 namespace Faerber\PdfToZpl; 
 
-use App\Helpers\TestFunction;
-use App\Http\Controllers\RateShopper\AsyncHttp;
-use App\Http\Controllers\RateShopper\Utils;
-use Psr\Http\Message\StreamInterface;
 use GuzzleHttp\Client as GuzzleClient;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\URL;
-use resource;
 use Exception;
 use Faerber\PdfToZpl\Settings\LabelDirection;
 
