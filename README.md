@@ -1,4 +1,4 @@
-# PDF to ZPL ![Packagist](https://img.shields.io/packagist/v/faerber/pdf-to-zpl) ![Packagist](https://img.shields.io/packagist/l/faerber/pdf-to-zpl)
+# PDF to ZPL ![Packagist](https://img.shields.io/packagist/v/faerber/pdf-to-zpl) 
 
 
 Convert a PDF into the ZPL format.
