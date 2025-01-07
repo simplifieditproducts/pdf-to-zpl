@@ -7,6 +7,7 @@ use Illuminate\Support\Collection;
 
 use Faerber\PdfToZpl\Settings\ConverterSettings;
 
+/** Converts a PDF file into a list of ZPL commands */
 class PdfToZplConverter {
     public ConverterSettings $settings;
 
@@ -40,6 +41,10 @@ class PdfToZplConverter {
         return $background;
     }
 
+    /**
+    * @param string $pdfData Raw PDF data as a string 
+    * @return Collection<int, string> A list of raw PNG data as a string 
+    */
     private function pdfToImages(string $pdfData): Collection {
         $img = new ImagickStub();
         $dpi = $this->settings->dpi; 
