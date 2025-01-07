@@ -40,7 +40,7 @@ You may need to enable PDF permission in your Imagick settings.
 The easiest way to do this is by running the setup shell script: `sudo ./scripts/configure-imagick.sh`
 
 If the script doesn't meet your needs you can perform the change manually.
-First edit your Imagick Policy Folder with: `sudo nano "/etc/$(ls /etc/ | grep ImageMagick)/policy.xml"`
+First edit your Imagick Policy file with: `sudo nano "/etc/$(ls /etc/ | grep ImageMagick)/policy.xml"`
 
 Find this line and ensure the rights are set to `read | write`:
 ```
@@ -63,8 +63,12 @@ Run `composer generate-test-data` and manually verify the images are rendered co
 ## Benchmarking
 Benchmarking is done via `phpbench`. Run `composer benchmark`.
 
+## Formatting
+Formatting is done via `php-cs-fixer`. Run `composer format`.
+
 ## How does this work?
-1. Load the PDF and seperate it into pages
+1. Loads the PDF and render each page as image
+1. Scale the image to match the DPI and aspect ratio of the label 
 1. Convert each page into a grayscaled bitmap
-1. Run line encode the bitmap and marshal it into a ZPL binary representation
+1. Run line encode the bitmap and marshall it into a ZPL binary representation
 1. Wrap the encoded data into a ZPL payload
