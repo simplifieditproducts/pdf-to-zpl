@@ -13,10 +13,13 @@ use Illuminate\Support\Collection;
  */
 class ImageToZplConverter implements ZplConverter
 {
+    public ConverterSettings $settings;
+
     public function __construct(
-        public ConverterSettings $settings, 
+        ConverterSettings|null $settings = null, 
     )
     {
+        $this->settings = $settings ?? new ConverterSettings();
     }
 
     public const START_CMD = "^XA";

@@ -7,8 +7,7 @@ use Exception;
 use Faerber\PdfToZpl\Settings\LabelDirection;
 
 /**
- * A binary PNG image of a ZPL label.
- * You can get this from the labelary API.
+ * A binary PNG image of a ZPL label fetched from `labelary.com`
  */
 class LabelImage
 {
@@ -67,6 +66,7 @@ class LabelImage
     /** A raw binary data of the image. Can be saved to disk or uploaded */
     public function asRaw()
     {
+        $this->checkImageReady();
         return $this->image;
     }
 

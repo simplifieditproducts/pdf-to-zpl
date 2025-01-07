@@ -27,4 +27,8 @@ class ConverterSettings
         $this->labelWidth = $labelWidth;
         $this->labelHeight = $labelHeight;
     }
+
+    public static function default() {
+        return new self();
+    }
 }

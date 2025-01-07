@@ -32,7 +32,7 @@ function downloadPages(array $pages, string $name) {
         $image->saveAs($basePath . ".png");
 
         // So we don't get rate limited
-        sleep(5);
+        sleep(1);
     }
 }
 
@@ -80,7 +80,7 @@ function purgeOld()
     }
 }
 
-// purgeOld();
-// convertEndiciaLabel();
-// convertDonkeyPdf();
+purgeOld();
+convertEndiciaLabel();
+convertDonkeyPdf();
 convertDuckImage();
