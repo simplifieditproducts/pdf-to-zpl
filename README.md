@@ -1,5 +1,5 @@
 # PDF to ZPL ![Packagist](https://img.shields.io/packagist/v/faerber/pdf-to-zpl)
-![donkey pdf](./static/donkey-label.jpg "Title")
+![donkey pdf](./static/donkey-label.jpg "Donkey Label")
 
 
 Convert a PDF into the ZPL format. Allowing for custom images, alphabets like Hebrew, Arabic and Cyrillic and multipage shipping labels!
