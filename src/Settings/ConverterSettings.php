@@ -7,6 +7,10 @@ use Faerber\PdfToZpl\Images\{ImageProcessorOption, ImageProcessor};
 /** Settings for the PDF to ZPL conversion */
 class ConverterSettings
 {
+    public const DEFAULT_LABEL_WIDTH = 812;
+    public const DEFAULT_LABEL_HEIGHT = 1218;
+    public const DEFAULT_LABEL_DPI = 203;
+    
     /** How the image should be scaled to fit on the label */
     public readonly ImageScale $scale;
     /** Dots Per Inch of the desired Label */
@@ -27,9 +31,9 @@ class ConverterSettings
 
     public function __construct(
         ImageScale $scale = ImageScale::Cover,
-        int $dpi = 203,
-        int $labelWidth = 812,
-        int $labelHeight = 1218,
+        int $dpi = self::DEFAULT_LABEL_DPI,
+        int $labelWidth = self::DEFAULT_LABEL_WIDTH,
+        int $labelHeight = self::DEFAULT_LABEL_HEIGHT,
         string $imageFormat = "png",
         ImageProcessorOption $imageProcessorOption = ImageProcessorOption::Gd,
     ) {

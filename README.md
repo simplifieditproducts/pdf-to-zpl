@@ -40,7 +40,7 @@ This library can work with only Imagick but GD is recommended as well because it
 <?php
 
 use Faerber\PdfToZpl\PdfToZplConverter;
-use Faerber\PdfToZpl\Settings\{ConverterSettings};
+use Faerber\PdfToZpl\Settings\ConverterSettings;
 use Faerber\PdfToZpl\Images\ImageProcessorOption;
 
 $converter = new PdfToZplConverter(
@@ -48,14 +48,6 @@ $converter = new PdfToZplConverter(
         imageProcessorOption: ImageProcessorOption::Imagick,
     )
 );
-
-// Get an array of ZPL commands (1 per page)
-$pages = $converter->convertFromFile("myFile.pdf");
-
-foreach ($pages as $index => $page) {
-    // Each page is a single ZPL statement
-    assert(str_starts_with($page, "^XA^GFA,"));
-}
 ```
 
 ### Imagick Settings

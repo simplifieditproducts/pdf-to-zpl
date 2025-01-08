@@ -6,10 +6,17 @@
          "html_report": {
              "extends": "html",
              "title": "faerber/pdf-to-zpl Benchmark"
+         },
+        "csv_report": {
+             "extends": "delimited",
+             "delimiter": ","
          }
     },
     "report.generators": {
         "main_report": {
+            "extends": "aggregate"
+        },
+        "plain_text_report": {
             "extends": "aggregate"
         }
     }

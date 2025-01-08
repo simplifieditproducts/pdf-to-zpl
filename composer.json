@@ -29,6 +29,7 @@
             "./vendor/bin/phpunit tests --bootstrap \"tests/TestUtils.php\""
         ],
         "benchmark": [
+            "php vendor/bin/phpbench run --report=main_report --report=plain_text_report --output=html_report --output=csv_report",
             "php vendor/bin/phpbench run --report=main_report --output=html_report"
         ],
         "format": [
@@ -36,6 +37,9 @@
         ],
         "run-example": [
             "php example/example.php"
+        ],
+        "run-tiny-example": [
+            "php example/tinyPrinter.php"
         ],
         "generate-test-data": [
             "php example/generateTestData.php"

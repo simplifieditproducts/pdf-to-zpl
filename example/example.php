@@ -6,6 +6,7 @@ use Faerber\PdfToZpl\LabelImage;
 use Faerber\PdfToZpl\PdfToZplConverter;
 use Faerber\PdfToZpl\Settings\ConverterSettings;
 use Faerber\PdfToZpl\Settings\ImageScale;
+use Faerber\PdfToZpl\ImageToZplConverter;
 
 $testData = __DIR__ . "/../test_data";
 $testOutput = __DIR__ . "/../test_output";
