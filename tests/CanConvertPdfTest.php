@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
+use Faerber\PdfToZpl\Images\ImageProcessorOption;
 use Faerber\PdfToZpl\PdfToZplConverter;
+use Faerber\PdfToZpl\Settings\ConverterSettings;
 use PHPUnit\Framework\TestCase;
 
 final class CanConvertPdfTest extends TestCase

@@ -4,11 +4,13 @@ require __DIR__ . "/../vendor/autoload.php";
 
 use Faerber\PdfToZpl\ImageToZplConverter;
 use Faerber\PdfToZpl\Settings\ConverterSettings;
+use Faerber\PdfToZpl\Settings\ImageScale;
 
+$size = 170;
 $converter = new ImageToZplConverter(
     new ConverterSettings(
-        labelWidth: (ConverterSettings::DEFAULT_LABEL_WIDTH / 3) - 50,
-        labelHeight: (ConverterSettings::DEFAULT_LABEL_HEIGHT / 6) - 50,
+        labelWidth: $size * 1.5,
+        labelHeight: $size * 0.7,
     )
 );
 
@@ -17,4 +19,4 @@ $testOutput = __DIR__ . "/../test_output";
 
 [$zpl] = $converter->convertFromFile($testData . "/duck.png");
 
-file_put_contents($testOutput . "/tiny-duck.zpl.txt", $zpl);
+file_put_contents($testOutput . "/tiny-duck.zpl.txt", '$tinyDuck = "' . $zpl . '"');
