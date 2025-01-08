@@ -35,6 +35,29 @@ sudo apt install php8.4-imagick
 Then make sure to enable them in `php.ini`.
 
 
+This library can work with only Imagick but GD is recommended as well because its a lot faster (see [benchmarks](./.phpbench/html/index.html) for more details)! If you would like to only use Imagick use these settings:
+```php
+<?php
+
+use Faerber\PdfToZpl\PdfToZplConverter;
+use Faerber\PdfToZpl\Settings\{ConverterSettings};
+use Faerber\PdfToZpl\Images\ImageProcessorOption;
+
+$converter = new PdfToZplConverter(
+    new ConverterSettings(
+        imageProcessorOption: ImageProcessorOption::Imagick,
+    )
+);
+
+// Get an array of ZPL commands (1 per page)
+$pages = $converter->convertFromFile("myFile.pdf");
+
+foreach ($pages as $index => $page) {
+    // Each page is a single ZPL statement
+    assert(str_starts_with($page, "^XA^GFA,"));
+}
+```
+
 ### Imagick Settings
 You may need to enable PDF permission in your Imagick settings.
 
