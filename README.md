@@ -2,7 +2,7 @@
 ![donkey pdf](./static/donkey-label.jpg "Donkey Label")
 
 
-Convert a PDF into the ZPL format. Allowing for custom images, alphabets like Hebrew, Arabic and Cyrillic and multipage shipping labels!
+Convert a PDF into the ZPL format. Allowing for custom images, alphabets like Hebrew, Arabic and Cyrillic (without messing with fonts on the printer) and multipage shipping labels!
 
 ## Gettings Started:
 ```
