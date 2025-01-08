@@ -1,7 +1,8 @@
-# PDF to ZPL ![Packagist](https://img.shields.io/packagist/v/faerber/pdf-to-zpl) 
+# PDF to ZPL ![Packagist](https://img.shields.io/packagist/v/faerber/pdf-to-zpl)
+![donkey pdf](./static/donkey-label.jpg "Title")
 
 
-Convert a PDF into the ZPL format.
+Convert a PDF into the ZPL format. Allowing for custom images, alphabets like Hebrew, Arabic and Cyrillic and multipage shipping labels!
 
 ## Gettings Started:
 ```
@@ -68,7 +69,7 @@ Formatting is done via `php-cs-fixer`. Run `composer format`.
 
 ## How does this work?
 1. Loads the PDF and render each page as image
-1. Scale the image to match the DPI and aspect ratio of the label 
+1. Scale the image to match the DPI and aspect ratio of the label
 1. Convert each page into a grayscaled bitmap
 1. Run line encode the bitmap and marshall it into a ZPL binary representation
 1. Wrap the encoded data into a ZPL payload
