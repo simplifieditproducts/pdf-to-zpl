@@ -12,7 +12,7 @@ use Illuminate\Support\Collection;
  *
  * @see https://github.com/himansuahm/php-zpl-converter
  */
-class ImageToZplConverter implements ZplConverter
+class ImageToZplConverter implements ZplConverterService
 {
     public ConverterSettings $settings;
 
@@ -96,7 +96,7 @@ class ImageToZplConverter implements ZplConverter
         return $this->convertFromBlob($rawData); 
     }
 
-    public function canConvert(): array {
+    public static function canConvert(): array {
         return ["png", "gif"];
     }
 

@@ -8,7 +8,7 @@ use Illuminate\Support\Collection;
 use Faerber\PdfToZpl\Settings\ConverterSettings;
 
 /** Converts a PDF file into a list of ZPL commands */
-class PdfToZplConverter implements ZplConverter
+class PdfToZplConverter implements ZplConverterService
 {
     public ConverterSettings $settings;
     private ImageToZplConverter $imageConverter;
@@ -100,7 +100,7 @@ class PdfToZplConverter implements ZplConverter
         return $this->convertFromBlob($rawData);
     }
 
-    public function canConvert(): array {
+    public static function canConvert(): array {
         return ["pdf"];
     }
 }

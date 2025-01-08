@@ -35,7 +35,8 @@ sudo apt install php8.4-imagick
 Then make sure to enable them in `php.ini`.
 
 
-This library can work with only Imagick but GD is recommended as well because its a lot faster (see [benchmarks](./.phpbench/html/index.html) for more details)! If you would like to only use Imagick use these settings:
+This library can work with only Imagick but GD is recommended as well because its a lot faster (see [benchmarks](./.phpbench/html/index.html) for more details)! 
+If you would like to only use Imagick use these settings:
 ```php
 <?php
 
@@ -68,6 +69,18 @@ Change to:
 ```
 
 I've only tested this library on Linux and Mac so if you get it working on windows feel free to open a PR!
+
+## Converting Images:
+```php
+<?php
+use Faerber\PdfToZpl\ImageToZplConverter;
+
+$converter = new ImagetoZplConverter();
+
+// Get an array of ZPL commands (1 per page)
+[$zpl] = $converter->convertFromFile("myFile.png");
+assert(str_starts_with($zpl, "^XA^GFA,"));
+```
 
 ## Unit Testing
 Testing is done via PHP Unit. Run `composer test`.
