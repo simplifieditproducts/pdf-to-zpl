@@ -17,9 +17,8 @@ class ImageToZplConverter implements ZplConverterService
     public ConverterSettings $settings;
 
     public function __construct(
-        ConverterSettings|null $settings = null, 
-    )
-    {
+        ConverterSettings|null $settings = null,
+    ) {
         $this->settings = $settings ?? new ConverterSettings();
     }
 
@@ -31,7 +30,7 @@ class ImageToZplConverter implements ZplConverterService
     {
         // Width in bytes
         $width = (int) ceil($image->width() / 8);
-        $height = $image->height(); 
+        $height = $image->height();
         $bitmap = '';
         $lastRow = null;
 
@@ -44,12 +43,12 @@ class ImageToZplConverter implements ZplConverterService
             }
 
             // Convert bits to bytes
-            $bytes = str_split($bits, 8);
-            $bytes[] = str_pad(array_pop($bytes), 8, '0');
+            $bytes = str_split($bits, length: 8);
+            $bytes[] = str_pad(array_pop($bytes), length: 8, pad_string: '0');
 
             // Convert bytes to hex and compress
             $row = (new Collection($bytes))
-                ->map(fn ($byte) => sprintf('%02X', bindec($byte)))
+                ->map(fn($byte) => sprintf('%02X', bindec($byte)))
                 ->implode('');
 
             $bitmap .= ($row === $lastRow) ? ':' : $this->compressRow(preg_replace(['/0+$/', '/F+$/'], [',', '!'], $row));
@@ -64,14 +63,14 @@ class ImageToZplConverter implements ZplConverterService
             self::START_CMD,
             self::ENCODE_CMD . ",",
             $parameters->implode(","),
-           self::END_CMD, 
-        ])->implode(''); 
+            self::END_CMD,
+        ])->implode('');
     }
 
     /**
      * @param string $rawImage The binary data of an image saved as a string (can be GIF, PNG or JPEG)
      */
-    private function loadFromRawImage(string $rawImage, ImageProcessor $processor): ImageProcessor 
+    private function loadFromRawImage(string $rawImage, ImageProcessor $processor): ImageProcessor
     {
         return $processor->readBlob($rawImage);
     }
@@ -83,27 +82,30 @@ class ImageToZplConverter implements ZplConverterService
         $img->scaleImage($this->settings);
         return $this->convertImageToZpl($img);
     }
-    
-    public function convertFromBlob(string $rawData): array {
+
+    public function convertFromBlob(string $rawData): array
+    {
         return [$this->rawImageToZpl($rawData)];
     }
 
-    public function convertFromFile(string $filepath): array {
+    public function convertFromFile(string $filepath): array
+    {
         $rawData = @file_get_contents($filepath);
         if (! $rawData) {
             throw new Exception("Invalid file {$filepath}");
         }
-        return $this->convertFromBlob($rawData); 
+        return $this->convertFromBlob($rawData);
     }
 
-    public static function canConvert(): array {
+    public static function canConvert(): array
+    {
         return ["png", "gif"];
     }
 
     /** Run Line Encoder (replace repeating characters) */
     private function compressRow(string $row): string
     {
-        return preg_replace_callback('/(.)(\1{2,})/', fn ($matches) => $this->compressSequence($matches[0]), $row);
+        return preg_replace_callback('/(.)(\1{2,})/', fn($matches) => $this->compressSequence($matches[0]), $row);
     }
 
     private function compressSequence(string $sequence): string

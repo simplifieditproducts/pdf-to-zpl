@@ -9,7 +9,7 @@ enum LabelDirection
     case Left;
     case Right;
 
-    public function default(): self
+    public static function default(): self
     {
         return self::Up;
     }

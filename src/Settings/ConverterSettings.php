@@ -2,7 +2,9 @@
 
 namespace Faerber\PdfToZpl\Settings;
 
+use Exception;
 use Faerber\PdfToZpl\Images\{ImageProcessorOption, ImageProcessor};
+use Symfony\Component\EventDispatcher\DependencyInjection\ExtractingEventDispatcher;
 
 /** Settings for the PDF to ZPL conversion */
 class ConverterSettings
@@ -25,8 +27,6 @@ class ConverterSettings
     /** The format to encode the image with */
     public string $imageFormat;
 
-    /** Which image library to use (Imagick or GD) */
-    public ImageProcessorOption $imageProcessorOption;
     public ImageProcessor $imageProcessor;
 
     public function __construct(
@@ -42,8 +42,19 @@ class ConverterSettings
         $this->labelWidth = $labelWidth;
         $this->labelHeight = $labelHeight;
         $this->imageFormat = $imageFormat;
-        $this->imageProcessorOption = $imageProcessorOption;
-        $this->imageProcessor = $this->imageProcessorOption->processor();
+        $this->verifyDependencies($imageProcessorOption);
+
+        $this->imageProcessor = $imageProcessorOption->processor();
+    }
+
+    private function verifyDependencies(ImageProcessorOption $option) {
+        if (! extension_loaded('gd') && $option === ImageProcessorOption::Gd) {
+            throw new Exception("pdf-to-zpl: You must install the GD image library or change imageProcessorOption to ImageProcessOption::Imagick");
+        }
+
+        if (! extension_loaded('imagick')) {
+            throw new Exception("pdf-to-zpl: You must install the Imagick image library"); 
+        }
     }
 
     public static function default() {

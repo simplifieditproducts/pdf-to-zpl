@@ -8,21 +8,25 @@ use Faerber\PdfToZpl\Settings\LabelDirection;
 
 /**
  * A binary PNG image of a ZPL label fetched from `labelary.com`
+ * This is a great way to debug or give users a preview before printing
  */
 class LabelImage
 {
-    private GuzzleClient $httpClient;
     public const URL = "http://api.labelary.com/v1/printers/8dpmm/labels/4x6/0/";
     public string $image;
+
+    private static GuzzleClient|null $httpClient = null;
+    private static ImageToZplConverter|null $imageConverter = null;
 
     public function __construct(
         public string $zpl,
         public LabelDirection $direction = LabelDirection::Up,
     ) {
-        $this->httpClient = new GuzzleClient();
+        self::$httpClient ??= new GuzzleClient();
         $this->image = $this->download();
     }
 
+    /** Download and return a raw PNG as a string */ 
     public function download(): string
     {
         $headers = [
@@ -30,7 +34,7 @@ class LabelImage
             'X-Rotation' => strval($this->direction->toDegree()),
         ];
 
-        $response = $this->httpClient->post(self::URL, [
+        $response = self::$httpClient->post(self::URL, [
             'headers' => $headers,
             'multipart' => [
                 [
@@ -47,26 +51,17 @@ class LabelImage
         return (string)$response->getBody();
     }
 
-    private function checkImageReady()
-    {
-        if (is_null($this->image)) {
-            throw new Exception("Image not downloaded yet!");
-        }
-    }
-
     /**
     * For use in HTML image tags. `<img src="{{ $label->asHtmlImage() }}" />`
     */
     public function asHtmlImage(): string
     {
-        $this->checkImageReady();
         return "data:image/png;base64," . base64_encode($this->image);
     }
 
     /** A raw binary data of the image. Can be saved to disk or uploaded */
     public function asRaw()
     {
-        $this->checkImageReady();
         return $this->image;
     }
 
@@ -77,7 +72,8 @@ class LabelImage
     */
     public function toZpl(): string
     {
-        return ImageToZpl::rawImageToZpl($this->asRaw());
+        self::$imageConverter ??= new ImageToZplConverter(); 
+        return self::$imageConverter->rawImageToZpl($this->asRaw());
     }
 
     /** Save the image to disk */
