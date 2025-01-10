@@ -6,8 +6,14 @@ use Faerber\PdfToZpl\LabelImage;
 use Faerber\PdfToZpl\PdfToZplConverter;
 use Faerber\PdfToZpl\Settings\ConverterSettings;
 use Faerber\PdfToZpl\Settings\ImageScale;
-use Faerber\PdfToZpl\ImageToZpl;
 use Faerber\PdfToZpl\ImageToZplConverter;
+
+// Generate Data the unit tests can compare against
+// After you've generated the data, view the images in the test_output folder
+// and ensure they are correct.
+//
+// The only reason you would need to regenerate test data is if you've made a 
+// change that will change the ZPL structure (ie use a different image library or modify scaling code)
 
 $testData = __DIR__ . "/../test_data";
 $testOutput = __DIR__ . "/../test_output";
@@ -15,7 +21,7 @@ $testOutput = __DIR__ . "/../test_output";
 $settings = new ConverterSettings(
     scale: ImageScale::Cover,
 );
-$converter = new PdfToZplConverter($settings);
+$pdfConverter = new PdfToZplConverter($settings);
 $imageConverter = new ImageToZplConverter($settings);
 
 function downloadPages(array $pages, string $name) {
@@ -45,9 +51,9 @@ function downloadPages(array $pages, string $name) {
 function convertPdfToPages(string $pdf, string $name)
 {
     echo "Converting PDF {$name}\n";  
-    global $converter, $testData, $testOutput;
+    global $pdfConverter, $testData, $testOutput;
     $pdfFile = $testData . "/" . $pdf;
-    $pages = $converter->convertFromFile($pdfFile);
+    $pages = $pdfConverter->convertFromFile($pdfFile);
     downloadPages($pages, $name);
 }
 

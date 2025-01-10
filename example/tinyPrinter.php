@@ -4,7 +4,9 @@ require __DIR__ . "/../vendor/autoload.php";
 
 use Faerber\PdfToZpl\ImageToZplConverter;
 use Faerber\PdfToZpl\Settings\ConverterSettings;
-use Faerber\PdfToZpl\Settings\ImageScale;
+
+// An Attempt to get the library working for tiny printers
+// like the ZD410 Desktop Printer
 
 $size = 170;
 $converter = new ImageToZplConverter(
