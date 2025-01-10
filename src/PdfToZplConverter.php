@@ -6,12 +6,14 @@ use Exception;
 use Faerber\PdfToZpl\Images\ImagickProcessor;
 use Illuminate\Support\Collection;
 use Faerber\PdfToZpl\Settings\ConverterSettings;
+use SebastianBergmann\Exporter\Exporter;
 
 /** Converts a PDF file into a list of ZPL commands */
 class PdfToZplConverter implements ZplConverterService
 {
     public ConverterSettings $settings;
     private ImageToZplConverter $imageConverter;
+    private const IMAGICK_SECURITY_CODE = 499;
 
     public function __construct(
         ConverterSettings|null $settings = null,
@@ -54,10 +56,16 @@ class PdfToZplConverter implements ZplConverterService
         $img = new ImagickStub();
         $dpi = $this->settings->dpi;
         $img->setResolution($dpi, $dpi);
-        $img->readImageBlob($pdfData);
-
-        $pages = $img->getNumberImages();
+        try {
+            $img->readImageBlob($pdfData);
+        } catch (Exception $e) {
+            /** @disregard intelephense(P1009) */
+            if (is_a($e, \ImagickException::class) && $e->getCode() === self::IMAGICK_SECURITY_CODE) {
+                throw new Exception("You need to enable PDF reading and writing in your Imagick settings (see docs for more details)", code: 10, previous: $e); 
+            } 
+        }
         
+        $pages = $img->getNumberImages();
         $processor = new ImagickProcessor($img);
 
         $images = collect([]);
@@ -100,6 +108,7 @@ class PdfToZplConverter implements ZplConverterService
         return $this->convertFromBlob($rawData);
     }
 
+    /** Extensions this converter is able to process */
     public static function canConvert(): array {
         return ["pdf"];
     }
