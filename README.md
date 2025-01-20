@@ -83,7 +83,7 @@ assert(str_starts_with($zpl, "^XA^GFA,"));
 ```
 
 ## Previewing Labels
-The (`labelary`)[https://labelary.com/] API is used to generate images from ZPL allowing the label to be previewed.
+The [`labelary`](https://labelary.com/) API is used to generate images from ZPL allowing the label to be previewed.
 This is a free API that requires no auth so it can be used with no setup. Be sure to respect their rate limits!
 
 ```php
