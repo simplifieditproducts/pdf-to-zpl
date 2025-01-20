@@ -1,4 +1,4 @@
-# PDF to ZPL ![Packagist](https://img.shields.io/packagist/v/faerber/pdf-to-zpl)
+# PDF to ZPL [![Packagist](https://img.shields.io/packagist/v/faerber/pdf-to-zpl)](https://packagist.org/packages/faerber/pdf-to-zpl)
 ![donkey pdf](./static/donkey-label.jpg "Donkey Label")
 
 
