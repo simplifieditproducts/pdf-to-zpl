@@ -82,6 +82,25 @@ $converter = new ImagetoZplConverter();
 assert(str_starts_with($zpl, "^XA^GFA,"));
 ```
 
+## Previewing Labels
+The (`labelary`)[https://labelary.com/] API is used to generate images from ZPL allowing the label to be previewed.
+This is a free API that requires no auth so it can be used with no setup. Be sure to respect their rate limits!
+
+```php
+<?php
+use Faerber\PdfToZpl\LabelImage;
+use Faerber\PdfToZpl\Settings\LabelDirection;
+
+$zpl = "^XA_ZPL_DATA_HERE...";
+
+$labelImage = new LabelImage(
+    zpl: $zpl,
+    direction: LabelDirection::Up,
+);
+$labelImage->saveAs("my_label.png");
+```
+
+
 ## Unit Testing
 Testing is done via PHP Unit. Run `composer test`.
 
