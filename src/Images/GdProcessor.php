@@ -65,14 +65,14 @@ class GdProcessor implements ImageProcessor
         imagecopyresampled(
             $scaledImg,
             $this->img,
-            0,
-            0,
-            0,
-            0,
-            $dstWidth,
-            $dstHeight,
-            $srcWidth,
-            $srcHeight
+            dst_x: 0,
+            dst_y: 0,
+            src_x: 0,
+            src_y: 0,
+            dst_width: $dstWidth,
+            dst_height: $dstHeight,
+            src_width: $srcWidth,
+            src_height: $srcHeight
         );
 
         $this->img = $scaledImg;
