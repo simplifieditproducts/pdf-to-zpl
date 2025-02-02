@@ -32,8 +32,8 @@ class ImagickProcessor implements ImageProcessor {
     }
 
     public function readBlob(string $data): static {
-        $this->img->readImageBlob($data);
-        if (! $this->img->readImageBlob($data)) {
+        $blob = $this->img->readImageBlob($data);
+        if (! $blob) {
             throw new Exception("Cannot load!");
         }
 
