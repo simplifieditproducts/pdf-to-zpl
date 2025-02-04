@@ -4,9 +4,8 @@ namespace Faerber\PdfToZpl;
 
 use Exception;
 use Faerber\PdfToZpl\Images\ImagickProcessor;
-use Illuminate\Support\Collection;
+use Tightenco\Collect\Support\Collection;
 use Faerber\PdfToZpl\Settings\ConverterSettings;
-use SebastianBergmann\Exporter\Exporter;
 
 /** Converts a PDF file into a list of ZPL commands */
 class PdfToZplConverter implements ZplConverterService

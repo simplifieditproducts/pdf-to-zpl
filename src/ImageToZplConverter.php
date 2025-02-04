@@ -5,8 +5,7 @@ namespace Faerber\PdfToZpl;
 use Exception;
 use Faerber\PdfToZpl\Settings\ConverterSettings;
 use Faerber\PdfToZpl\Images\ImageProcessor;
-use Illuminate\Support\Collection;
-
+use Tightenco\Collect\Support\Collection;
 /**
  * Convert an Image to Zpl
  *

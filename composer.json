@@ -18,8 +18,8 @@
         }
     ],
     "require": {
-        "illuminate/collections": "^11.37",
-        "guzzlehttp/guzzle": "^7.9"
+        "guzzlehttp/guzzle": "^7.9",
+        "tightenco/collect": "9.52.7"
     },
     "extra": {
         "examples-dir": "example"
