@@ -6,6 +6,7 @@ use Exception;
 use Faerber\PdfToZpl\Settings\ConverterSettings;
 use Faerber\PdfToZpl\Images\ImageProcessor;
 use Tightenco\Collect\Support\Collection;
+
 /**
  * Convert an Image to Zpl
  *
