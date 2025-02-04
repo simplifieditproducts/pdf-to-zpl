@@ -2,7 +2,7 @@
     "name": "faerber/pdf-to-zpl",
     "description": "Convert a PDF file to a ZPL file",
     "type": "library",
-    "version": "0.3.2",
+    "version": "0.3.3",
     "license": "MIT",
     "keywords": ["zebra-printers", "pdf", "zpl"],
     "homepage": "https://github.com/benfaerber/pdf-to-zpl",
@@ -18,7 +18,7 @@
         }
     ],
     "require": {
-        "illuminate/collections": "^11.37",
+        "illuminate/collections": "^8",
         "guzzlehttp/guzzle": "^7.9"
     },
     "extra": {
