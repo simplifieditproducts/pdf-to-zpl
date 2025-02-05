@@ -57,14 +57,19 @@ class ImageToZplConverter implements ZplConverterService
 
         // Prepare ZPL command parameters
         $byteCount = $width * $height;
-        $parameters = collect([$byteCount, $byteCount, $width, $bitmap]);
-
-        return collect([
+        $parameters = new Collection([
+            self::ENCODE_CMD, 
+            $byteCount, 
+            $byteCount, 
+            $width, 
+            $bitmap
+        ]);
+        
+        return (new Collection([
             self::START_CMD,
-            self::ENCODE_CMD . ",",
             $parameters->implode(","),
             self::END_CMD,
-        ])->implode('');
+        ]))->implode('');
     }
 
     /**

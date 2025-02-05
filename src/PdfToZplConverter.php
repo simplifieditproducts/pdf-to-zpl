@@ -67,7 +67,7 @@ class PdfToZplConverter implements ZplConverterService
         $pages = $img->getNumberImages();
         $processor = new ImagickProcessor($img, $this->settings);
 
-        $images = collect([]);
+        $images = new Collection([]);
         for ($i = 0; $i < $pages; $i++) {
             $img->setIteratorIndex($i);
 

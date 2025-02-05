@@ -2,10 +2,6 @@
 
 declare(strict_types=1);
 
-
-use Faerber\PdfToZpl\PdfToZplConverter;
-use PHPUnit\Framework\TestCase;
-
 class TestUtils
 {
     public static function testData(string $filename): string
