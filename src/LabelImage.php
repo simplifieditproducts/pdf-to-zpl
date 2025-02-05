@@ -26,7 +26,7 @@ class LabelImage
         $this->image = $this->download();
     }
 
-    /** Download and return a raw PNG as a string */ 
+    /** Download and return a raw PNG as a string */
     public function download(): string
     {
         $headers = [
@@ -72,7 +72,7 @@ class LabelImage
     */
     public function toZpl(): string
     {
-        self::$imageConverter ??= new ImageToZplConverter(); 
+        self::$imageConverter ??= new ImageToZplConverter();
         return self::$imageConverter->rawImageToZpl($this->asRaw());
     }
 

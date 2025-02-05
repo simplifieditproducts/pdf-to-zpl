@@ -7,8 +7,8 @@ use PHPUnit\Framework\TestCase;
 
 final class CanUseFactoryTest extends TestCase
 {
-
-    public function testCanUseFactoryForImage() {
+    public function testCanUseFactoryForImage()
+    {
         $duck = TestUtils::testData("duck.png");
         $converter = ZplConverterFactory::converterFromFile($duck);
         $pages = $converter->convertFromFile($duck);
