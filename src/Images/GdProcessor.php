@@ -10,8 +10,12 @@ use GdImage;
 class GdProcessor implements ImageProcessor
 {
     private GdImage $img;
+    private ConverterSettings $settings;
 
-    public function __construct() {}
+    public function __construct(ConverterSettings $settings)
+    {
+        $this->settings = $settings;
+    }
 
     public function width(): int
     {
@@ -39,19 +43,19 @@ class GdProcessor implements ImageProcessor
         return $this;
     }
 
-    public function scaleImage(ConverterSettings $settings): static
+    public function scaleImage(): static
     {
-        if (!$settings->scale->shouldResize() || $this->width() === $settings->labelWidth) {
+        if (!$this->settings->scale->shouldResize() || $this->width() === $this->settings->labelWidth) {
             return $this;
         }
 
         $srcWidth = imagesx($this->img);
         $srcHeight = imagesy($this->img);
 
-        $dstWidth = $settings->labelWidth;
-        $dstHeight = $settings->labelHeight;
+        $dstWidth = $this->settings->labelWidth;
+        $dstHeight = $this->settings->labelHeight;
 
-        if ($settings->scale->isBestFit()) {
+        if ($this->settings->scale->isBestFit()) {
             $aspectRatio = $srcWidth / $srcHeight;
             if ($srcWidth > $srcHeight) {
                 $dstHeight = (int) ($dstWidth / $aspectRatio);
@@ -77,6 +81,14 @@ class GdProcessor implements ImageProcessor
 
         $this->img = $scaledImg;
 
+        return $this;
+    }
+
+    public function rotateImage(): static
+    {
+        if ($this->settings->rotateDegrees) {
+            $this->img = imagerotate($this->img, $this->settings->rotateDegrees, 0);
+        }
         return $this;
     }
 

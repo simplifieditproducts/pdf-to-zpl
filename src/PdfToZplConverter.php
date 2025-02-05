@@ -60,20 +60,22 @@ class PdfToZplConverter implements ZplConverterService
         } catch (Exception $e) {
             /** @disregard intelephense(P1009) */
             if (is_a($e, \ImagickException::class) && $e->getCode() === self::IMAGICK_SECURITY_CODE) {
-                throw new Exception("You need to enable PDF reading and writing in your Imagick settings (see docs for more details)", code: 10, previous: $e); 
-            } 
+                throw new Exception("You need to enable PDF reading and writing in your Imagick settings (see docs for more details)", code: 10, previous: $e);
+            }
         }
-        
+
         $pages = $img->getNumberImages();
-        $processor = new ImagickProcessor($img);
+        $processor = new ImagickProcessor($img, $this->settings);
 
         $images = collect([]);
         for ($i = 0; $i < $pages; $i++) {
             $img->setIteratorIndex($i);
 
             $img->setImageCompressionQuality(100);
-            
-            $processor->scaleImage($this->settings); 
+
+            $processor
+                ->scaleImage()
+                ->rotateImage();
 
             $img->setImageFormat('png');
             $background = $this->background($img);
@@ -108,7 +110,8 @@ class PdfToZplConverter implements ZplConverterService
     }
 
     /** Extensions this converter is able to process */
-    public static function canConvert(): array {
+    public static function canConvert(): array
+    {
         return ["pdf"];
     }
 }

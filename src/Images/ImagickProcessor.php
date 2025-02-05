@@ -3,22 +3,28 @@
 namespace Faerber\PdfToZpl\Images;
 
 use Exception;
+use Faerber\PdfToZpl\ImagickPixelStub;
 use Faerber\PdfToZpl\ImagickStub;
 use Faerber\PdfToZpl\Settings\ConverterSettings;
 
-class ImagickProcessor implements ImageProcessor {
+class ImagickProcessor implements ImageProcessor
+{
     private ImagickStub $img;
+    private ConverterSettings $settings;
 
-    public function __construct(ImagickStub $img) {
+    public function __construct(ImagickStub $img, ConverterSettings $settings)
+    {
         $this->img = $img;
+        $this->settings = $settings;
+    }
 
-    } 
-
-    public function width(): int {
+    public function width(): int
+    {
         return $this->img->getImageWidth();
     }
 
-    public function height(): int {
+    public function height(): int
+    {
         return $this->img->getImageHeight();
     }
 
@@ -28,10 +34,11 @@ class ImagickProcessor implements ImageProcessor {
         $color = $pixel->getColor();
         $avgColor = ($color['r'] + $color['g'] + $color['b']) / 3;
 
-        return $avgColor < 0.5; 
+        return $avgColor < 0.5;
     }
 
-    public function readBlob(string $data): static {
+    public function readBlob(string $data): static
+    {
         $blob = $this->img->readImageBlob($data);
         if (! $blob) {
             throw new Exception("Cannot load!");
@@ -43,18 +50,28 @@ class ImagickProcessor implements ImageProcessor {
         return $this;
     }
 
-    public function scaleImage(ConverterSettings $settings): static 
+    /** Perform any necessary scaling on the image */
+    public function scaleImage(): static
     {
-        if ($this->width() === $settings->labelWidth) {
+        if ($this->width() === $this->settings->labelWidth) {
             return $this;
-        } 
-        
-        if ($settings->scale->shouldResize()) {
+        }
+
+        if ($this->settings->scale->shouldResize()) {
             $this->img->scaleImage(
-                $settings->labelWidth, 
-                $settings->labelHeight, 
-                bestfit: $settings->scale->isBestFit()
+                $this->settings->labelWidth,
+                $this->settings->labelHeight,
+                bestfit: $this->settings->scale->isBestFit()
             );
+        }
+        return $this;
+    }
+
+    /** Perform any necessary rotate for landscape PDFs */
+    public function rotateImage(): static
+    {
+        if ($this->settings->rotateDegrees) {
+            $this->img->rotateImage((new ImagickPixelStub("white"))->inner(), $this->settings->rotateDegrees);
         }
         return $this;
     }

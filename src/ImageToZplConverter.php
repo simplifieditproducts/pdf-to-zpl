@@ -48,7 +48,7 @@ class ImageToZplConverter implements ZplConverterService
 
             // Convert bytes to hex and compress
             $row = (new Collection($bytes))
-                ->map(fn($byte) => sprintf('%02X', bindec($byte)))
+                ->map(fn ($byte) => sprintf('%02X', bindec($byte)))
                 ->implode('');
 
             $bitmap .= ($row === $lastRow) ? ':' : $this->compressRow(preg_replace(['/0+$/', '/F+$/'], [',', '!'], $row));
@@ -105,7 +105,7 @@ class ImageToZplConverter implements ZplConverterService
     /** Run Line Encoder (replace repeating characters) */
     private function compressRow(string $row): string
     {
-        return preg_replace_callback('/(.)(\1{2,})/', fn($matches) => $this->compressSequence($matches[0]), $row);
+        return preg_replace_callback('/(.)(\1{2,})/', fn ($matches) => $this->compressSequence($matches[0]), $row);
     }
 
     private function compressSequence(string $sequence): string

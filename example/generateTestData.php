@@ -12,7 +12,7 @@ use Faerber\PdfToZpl\ImageToZplConverter;
 // After you've generated the data, view the images in the test_output folder
 // and ensure they are correct.
 //
-// The only reason you would need to regenerate test data is if you've made a 
+// The only reason you would need to regenerate test data is if you've made a
 // change that will change the ZPL structure (ie use a different image library or modify scaling code)
 
 $testData = __DIR__ . "/../test_data";
@@ -24,17 +24,22 @@ $settings = new ConverterSettings(
 $pdfConverter = new PdfToZplConverter($settings);
 $imageConverter = new ImageToZplConverter($settings);
 
-function downloadPages(array $pages, string $name) {
-    global $testOutput; 
+$landscapePdfConverter = new PdfToZplConverter(new ConverterSettings(
+    rotateDegrees: 90,
+));
+
+function downloadPages(array $pages, string $name)
+{
+    global $testOutput;
     foreach ($pages as $index => $page) {
         assert(str_starts_with($page, "^XA^GFA,"));
 
         $basePath = $testOutput . "/{$name}_{$index}";
-        $zplFilepath = $basePath . ".zpl.txt"; 
+        $zplFilepath = $basePath . ".zpl.txt";
         if (file_exists($zplFilepath)) {
             continue;
-        } 
-        
+        }
+
         file_put_contents($zplFilepath, $page);
 
         echo "Downloading {$name} {$index}\n";
@@ -48,32 +53,41 @@ function downloadPages(array $pages, string $name) {
 }
 
 
-function convertPdfToPages(string $pdf, string $name)
+function convertPdfToPages(string $pdf, string $name, PdfToZplConverter $converter)
 {
-    echo "Converting PDF {$name}\n";  
-    global $pdfConverter, $testData, $testOutput;
+    echo "Converting PDF {$name}\n";
+    global $testData, $testOutput;
     $pdfFile = $testData . "/" . $pdf;
-    $pages = $pdfConverter->convertFromFile($pdfFile);
+    $pages = $converter->convertFromFile($pdfFile);
     downloadPages($pages, $name);
 }
 
-function convertImageToPages(string $image, string $name) {
-    echo "Converting Image {$name}\n";  
+function convertImageToPages(string $image, string $name)
+{
+    echo "Converting Image {$name}\n";
     global $imageConverter, $testData, $testOutput;
     $imageFile = $testData . "/" . $image;
     $pages = $imageConverter->convertFromFile($imageFile);
-    downloadPages($pages, $name); 
+    downloadPages($pages, $name);
 }
 
 
 function convertEndiciaLabel()
 {
-    convertPdfToPages("endicia-shipping-label.pdf", "expected_label");
+    global $pdfConverter;
+    convertPdfToPages("endicia-shipping-label.pdf", "expected_label", $pdfConverter);
 }
 
 function convertDonkeyPdf()
 {
-    convertPdfToPages("donkey.pdf", "expected_donkey");
+    global $pdfConverter;
+    convertPdfToPages("donkey.pdf", "expected_donkey", $pdfConverter);
+}
+
+function convertLandscapePdf()
+{
+    global $landscapePdfConverter;
+    convertPdfToPages("usps-label-landscape.pdf", "expected_usps_landscape", $landscapePdfConverter);
 }
 
 function convertDuckImage()
@@ -97,3 +111,4 @@ purgeOld();
 convertEndiciaLabel();
 convertDonkeyPdf();
 convertDuckImage();
+convertLandscapePdf();

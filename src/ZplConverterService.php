@@ -2,10 +2,11 @@
 
 namespace Faerber\PdfToZpl;
 
-interface ZplConverterService {
+interface ZplConverterService
+{
     /** Read and convert a file into a list of ZPL commands (1 per page) */
     public function convertFromFile(string $filepath): array;
-    
+
     /** Convert a raw blob of binary data into a list of ZPL commands (1 per page) */
     public function convertFromBlob(string $rawData): array;
 

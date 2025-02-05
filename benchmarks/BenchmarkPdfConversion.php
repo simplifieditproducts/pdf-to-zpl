@@ -24,7 +24,8 @@ class BenchmarkPdfConversion
         $converter->convertFromFile($testPath);
     }
 
-    private function convertFileWithProcessor(string $name, ImageProcessorOption $imageProcessor) {
+    private function convertFileWithProcessor(string $name, ImageProcessorOption $imageProcessor)
+    {
         return $this->convertFile($name, new ConverterSettings(
             imageProcessorOption: $imageProcessor,
         ));
@@ -95,7 +96,7 @@ class BenchmarkPdfConversion
     {
         $this->convertFile("endicia-shipping-label.pdf", new ConverterSettings(
             labelWidth: 150,
-            labelHeight: 100, 
+            labelHeight: 100,
         ));
     }
 }

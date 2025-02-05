@@ -7,7 +7,8 @@ use PHPUnit\Framework\TestCase;
 
 final class CanConvertImageTest extends TestCase
 {
-    public function testCanConvertDuck() {
+    public function testCanConvertDuck()
+    {
         $converter = new ImageToZplConverter();
         $pages = $converter->convertFromFile(TestUtils::testData("duck.png"));
         $expectedPageCount = 1;

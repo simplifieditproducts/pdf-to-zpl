@@ -12,7 +12,7 @@ class ConverterSettings
     public const DEFAULT_LABEL_WIDTH = 812;
     public const DEFAULT_LABEL_HEIGHT = 1218;
     public const DEFAULT_LABEL_DPI = 203;
-    
+
     /** How the image should be scaled to fit on the label */
     public readonly ImageScale $scale;
     /** Dots Per Inch of the desired Label */
@@ -27,6 +27,9 @@ class ConverterSettings
     /** The format to encode the image with */
     public string $imageFormat;
 
+    /** How many degrees to rotate the label. Used for landscape PDFs */
+    public int|null $rotateDegrees;
+
     public ImageProcessor $imageProcessor;
 
     public function __construct(
@@ -36,28 +39,32 @@ class ConverterSettings
         int $labelHeight = self::DEFAULT_LABEL_HEIGHT,
         string $imageFormat = "png",
         ImageProcessorOption $imageProcessorOption = ImageProcessorOption::Gd,
+        int|null $rotateDegrees = null,
     ) {
         $this->scale = $scale;
         $this->dpi = $dpi;
         $this->labelWidth = $labelWidth;
         $this->labelHeight = $labelHeight;
         $this->imageFormat = $imageFormat;
+        $this->rotateDegrees = $rotateDegrees;
         $this->verifyDependencies($imageProcessorOption);
 
-        $this->imageProcessor = $imageProcessorOption->processor();
+        $this->imageProcessor = $imageProcessorOption->processor($this);
     }
 
-    private function verifyDependencies(ImageProcessorOption $option) {
+    private function verifyDependencies(ImageProcessorOption $option)
+    {
         if (! extension_loaded('gd') && $option === ImageProcessorOption::Gd) {
             throw new Exception("pdf-to-zpl: You must install the GD image library or change imageProcessorOption to ImageProcessOption::Imagick");
         }
 
         if (! extension_loaded('imagick')) {
-            throw new Exception("pdf-to-zpl: You must install the Imagick image library"); 
+            throw new Exception("pdf-to-zpl: You must install the Imagick image library");
         }
     }
 
-    public static function default() {
+    public static function default()
+    {
         return new self();
     }
 }

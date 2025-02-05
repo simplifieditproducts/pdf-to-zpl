@@ -7,10 +7,12 @@ use Faerber\PdfToZpl\PdfToZplConverter;
 use Faerber\PdfToZpl\Settings\ConverterSettings;
 use Faerber\PdfToZpl\ZplConverterService;
 
-class ZplConverterFactory {
-    public static function converterFromFile(string $filepath, ConverterSettings|null $settings = null): ZplConverterService {
-        $ext = pathinfo($filepath, PATHINFO_EXTENSION); 
-        $settings ??= new ConverterSettings(); 
+class ZplConverterFactory
+{
+    public static function converterFromFile(string $filepath, ConverterSettings|null $settings = null): ZplConverterService
+    {
+        $ext = pathinfo($filepath, PATHINFO_EXTENSION);
+        $settings ??= new ConverterSettings();
         $services = [PdfToZplConverter::class, ImageToZplConverter::class];
         foreach ($services as $service) {
             if (in_array($ext, $service::canConvert())) {
@@ -18,5 +20,5 @@ class ZplConverterFactory {
             }
         }
         throw new Exception("No converter for {$ext} files!");
-    } 
+    }
 }
