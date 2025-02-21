@@ -37,7 +37,7 @@ sudo apt install php8.4-imagick
 Then make sure to enable them in `php.ini`.
 
 
-This library can work with only Imagick but GD is recommended as well because its a lot faster (see [benchmarks](./.phpbench/html/index.html) for more details)! 
+This library can work with only Imagick but GD is recommended because it's a lot faster (see [benchmarks](./.phpbench/html/index.html) for more details)! 
 If you would like to only use Imagick use these settings:
 ```php
 <?php

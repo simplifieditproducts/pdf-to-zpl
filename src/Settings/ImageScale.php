@@ -16,7 +16,7 @@ enum ImageScale
     case Cover;
 
     /**
-    * Do not scale the image in anyway
+    * Do not scale the image in anyway (could cause the image to not fit on the label)
     */
     case None;
 

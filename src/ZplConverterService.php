@@ -2,6 +2,7 @@
 
 namespace Faerber\PdfToZpl;
 
+/** A converter able to convert certain file types into ZPL */
 interface ZplConverterService
 {
     /** Read and convert a file into a list of ZPL commands (1 per page) */
