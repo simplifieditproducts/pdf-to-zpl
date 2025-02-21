@@ -17,6 +17,8 @@ $converter = new PdfToZplConverter();
 
 // Get an array of ZPL commands (1 per page)
 $pages = $converter->convertFromFile("myFile.pdf");
+// Or from a blob:
+$pages = $converter->convertFromBlob(file_get_contents("myFile.pdf"));
 
 foreach ($pages as $index => $page) {
     // Each page is a single ZPL statement
