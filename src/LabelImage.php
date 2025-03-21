@@ -14,7 +14,7 @@ use Faerber\PdfToZpl\Settings\LabelDirection;
  */
 class LabelImage
 {
-    public const URL = "http://api.labelary.com/v1/printers/8dpmm/labels/4x6/0/";
+    public const URL = "http://api.labelary.com/v1/printers/8dpmm/labels/";
     public string $image;
 
     private static GuzzleClient|null $httpClient = null;
@@ -23,6 +23,8 @@ class LabelImage
     public function __construct(
         public string $zpl,
         public LabelDirection $direction = LabelDirection::Up,
+        public float $width = 4,
+        public float $height = 6,
     ) {
         self::$httpClient ??= new GuzzleClient();
         $this->image = $this->download();
@@ -36,7 +38,8 @@ class LabelImage
             'X-Rotation' => strval($this->direction->toDegree()),
         ];
 
-        $response = self::$httpClient->post(self::URL, [
+        $url = self::URL . "/{$this->width}x{$this->height}/0/";
+        $response = self::$httpClient->post($url, [
             'headers' => $headers,
             'multipart' => [
                 [
