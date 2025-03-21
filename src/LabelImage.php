@@ -14,7 +14,7 @@ use Faerber\PdfToZpl\Settings\LabelDirection;
  */
 class LabelImage
 {
-    public const URL = "http://api.labelary.com/v1/printers/8dpmm/labels/";
+    public const URL = "http://api.labelary.com/v1/printers/8dpmm/labels";
     public string $image;
 
     private static GuzzleClient|null $httpClient = null;
