@@ -21,7 +21,8 @@ abstract class Stub implements Stringable
         $this->inner = new $klass(...$args);
     }
 
-    abstract public static function className();
+    /** @return class-string */
+    abstract public static function className(): string;
 
     /** Look up a constant */
     public static function constant(string $name)
@@ -67,7 +68,7 @@ abstract class Stub implements Stringable
 
 class ImagickStub extends Stub
 {
-    public static function className()
+    public static function className(): string
     {
         /** @disregard intelephense(P1009) */
         return Imagick::class;
@@ -76,7 +77,7 @@ class ImagickStub extends Stub
 
 class ImagickPixelStub extends Stub
 {
-    public static function className()
+    public static function className(): string
     {
         /** @disregard intelephense(P1009) */
         return ImagickPixel::class;
