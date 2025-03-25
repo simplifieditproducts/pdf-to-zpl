@@ -63,6 +63,8 @@ class PdfToZplConverter implements ZplConverterService
             if (is_a($e, \ImagickException::class) && $e->getCode() === self::IMAGICK_SECURITY_CODE) {
                 throw new Exception("You need to enable PDF reading and writing in your Imagick settings (see docs for more details)", code: 10, previous: $e);
             }
+            // No special handling
+            throw $e; 
         }
 
         $pages = $img->getNumberImages();
