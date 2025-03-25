@@ -46,7 +46,6 @@ jobs:
 
     - name: Run test suite
       run: composer test
-      continue-on-error: true
 
     - name: Show PHPUnit logs on failure
       if: failure()
