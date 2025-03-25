@@ -69,6 +69,8 @@ Change to:
 ```
 <policy domain="coder" rights="read | write" pattern="PDF" />
 ```
+If this line doesn't exist at all, add it. You'll only run into this with tiny linux boxes like Github Actions. 
+
 
 I've only tested this library on Linux and Mac so if you get it working on windows feel free to open a PR!
 
