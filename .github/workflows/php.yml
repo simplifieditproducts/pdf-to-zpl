@@ -33,7 +33,7 @@ jobs:
       run: composer install --prefer-dist --no-progress
 
     - name: Configure Imagick Permissions 
-      run: sudo cp -f ./test_data/github-actions-imagick.xml /etc/ImageMagick-6/policy.xml
+      run: sudo cp -f ./test_data/github-actions-imagick-config.xml /etc/ImageMagick-6/policy.xml
 
     - name: Run test suite
       run: composer test 
