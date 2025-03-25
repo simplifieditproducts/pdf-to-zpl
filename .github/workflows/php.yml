@@ -33,6 +33,11 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-php-
 
+    - name: Install Imagick and GD 
+      run: |
+          sudo apt install php8.3-imagick
+          sudo apt install php8.3-gd
+
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress
 
@@ -41,7 +46,3 @@ jobs:
 
     - name: Run test suite
       run: composer test
-    
-    - name: Show PHP Logs
-      if: failure()
-      run: cat /tmp/php-error.log || echo "No errors logged"
