@@ -26,7 +26,7 @@
     },
     "scripts": {
         "test": [
-            "./vendor/bin/phpunit tests --bootstrap \"tests/TestUtils.php\""
+            "./vendor/bin/phpunit tests --verbose --bootstrap \"tests/TestUtils.php\""
         ],
         "benchmark": [
             "php vendor/bin/phpbench run --report=main_report --report=plain_text_report --output=html_report --output=csv_report",
