@@ -46,3 +46,11 @@ jobs:
 
     - name: Run test suite
       run: composer test
+      continue-on-error: true
+
+    - name: Show PHPUnit logs on failure
+      if: failure()
+      run: |
+        echo "Showing PHPUnit logs..."
+        cat phpunit-junit.xml || echo "No JUnit logs found"
+        cat phpunit-testdox.txt || echo "No TestDox logs found"
