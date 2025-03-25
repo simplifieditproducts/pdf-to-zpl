@@ -36,4 +36,8 @@ jobs:
       run: sudo cp -f ./test_data/github-actions-imagick-config.xml /etc/ImageMagick-6/policy.xml
 
     - name: Run test suite
-      run: composer test 
+      run: composer test
+    
+    - name: Show PHP Logs
+      if: failure()
+      run: cat /tmp/php-error.log || echo "No errors logged"
