@@ -31,6 +31,7 @@ final class CanConvertPdfTest extends TestCase
     public function testCanConvertDonkeyPdf(): void
     {
         $converter = new PdfToZplConverter();
+        logger(TestUtils::testData("donkey.pdf"));
         $pages = $converter->convertFromFile(TestUtils::testData("donkey.pdf"));
         $expectedPageCount = 9;
 
