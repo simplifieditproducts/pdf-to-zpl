@@ -32,6 +32,8 @@ class ConverterSettings
 
     public ImageProcessor $imageProcessor;
 
+    public bool $verboseLogs;
+
     public function __construct(
         ImageScale $scale = ImageScale::Cover,
         int $dpi = self::DEFAULT_LABEL_DPI,
@@ -40,6 +42,7 @@ class ConverterSettings
         string $imageFormat = "png",
         ImageProcessorOption $imageProcessorOption = ImageProcessorOption::Gd,
         int|null $rotateDegrees = null,
+        bool $verboseLogs = false,
     ) {
         $this->scale = $scale;
         $this->dpi = $dpi;
@@ -47,6 +50,7 @@ class ConverterSettings
         $this->labelHeight = $labelHeight;
         $this->imageFormat = $imageFormat;
         $this->rotateDegrees = $rotateDegrees;
+        $this->verboseLogs = $verboseLogs; 
         $this->verifyDependencies($imageProcessorOption);
 
         $this->imageProcessor = $imageProcessorOption->processor($this);
@@ -66,5 +70,12 @@ class ConverterSettings
     public static function default()
     {
         return new self();
+    }
+
+    public function log(...$messages) {
+        if (! $this->verboseLogs) return; 
+        foreach ($messages as $message) {
+            echo $message;
+        } 
     }
 }

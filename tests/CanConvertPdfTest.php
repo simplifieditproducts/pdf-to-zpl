@@ -11,7 +11,7 @@ final class CanConvertPdfTest extends TestCase
 {
     public function testCanConvertEndiciaPdf(): void
     {
-        $converter = new PdfToZplConverter();
+        $converter = new PdfToZplConverter(new ConverterSettings(verboseLogs: true));
         $pages = $converter->convertFromFile(TestUtils::testData("endicia-shipping-label.pdf"));
         $expectedPageCount = 3;
 
@@ -30,7 +30,7 @@ final class CanConvertPdfTest extends TestCase
 
     public function testCanConvertDonkeyPdf(): void
     {
-        $converter = new PdfToZplConverter();
+        $converter = new PdfToZplConverter(new ConverterSettings(verboseLogs: true));
         $pages = $converter->convertFromFile(TestUtils::testData("donkey.pdf"));
         $expectedPageCount = 9;
 
