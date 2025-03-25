@@ -1,2 +1,5 @@
 .php-cs-fixer.cache
 vendor/
+phpunit-junit.xml
+phpunit-teamcity.log
+phpunit-testdox.txt
