@@ -75,7 +75,9 @@ class ConverterSettings
     public function log(...$messages) {
         if (! $this->verboseLogs) return; 
         foreach ($messages as $message) {
+            echo "[pdf-to-zpl logs]: "; 
             echo $message;
+            echo "\n";
         } 
     }
 }
