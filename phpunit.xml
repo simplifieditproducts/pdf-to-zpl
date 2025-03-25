@@ -1,0 +1,7 @@
+<phpunit bootstrap="tests/TestUtils.php">
+    <logging>
+        <log type="junit" target="phpunit-junit.xml"/>
+        <log type="teamcity" target="phpunit-teamcity.log"/>
+        <log type="testdox-text" target="phpunit-testdox.txt"/>
+    </logging>
+</phpunit>

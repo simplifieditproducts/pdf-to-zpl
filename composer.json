@@ -2,7 +2,7 @@
     "name": "faerber/pdf-to-zpl",
     "description": "Convert a PDF file to a ZPL file",
     "type": "library",
-    "version": "0.4.5",
+    "version": "0.4.6",
     "license": "MIT",
     "keywords": ["zebra-printers", "pdf", "zpl"],
     "homepage": "https://github.com/benfaerber/pdf-to-zpl",
@@ -19,14 +19,14 @@
     ],
     "require": {
         "guzzlehttp/guzzle": "^7.9",
-        "tightenco/collect": "9.52.7"
+        "tightenco/collect": "^9"
     },
     "extra": {
         "examples-dir": "example"
     },
     "scripts": {
         "test": [
-            "./vendor/bin/phpunit tests --bootstrap \"tests/TestUtils.php\""
+            "./vendor/bin/phpunit tests --verbose --bootstrap \"tests/TestUtils.php\""
         ],
         "benchmark": [
             "php vendor/bin/phpbench run --report=main_report --report=plain_text_report --output=html_report --output=csv_report",

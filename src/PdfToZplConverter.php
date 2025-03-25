@@ -57,18 +57,23 @@ class PdfToZplConverter implements ZplConverterService
         $img->setResolution($dpi, $dpi);
         try {
             $img->readImageBlob($pdfData);
+            $this->settings->log("Read blob...");
         } catch (Exception $e) {
             /** @disregard intelephense(P1009) */
             if (is_a($e, \ImagickException::class) && $e->getCode() === self::IMAGICK_SECURITY_CODE) {
                 throw new Exception("You need to enable PDF reading and writing in your Imagick settings (see docs for more details)", code: 10, previous: $e);
             }
+            // No special handling
+            throw $e; 
         }
 
         $pages = $img->getNumberImages();
+        $this->settings->log("Page count = " . $pages); 
         $processor = new ImagickProcessor($img, $this->settings);
 
         $images = new Collection([]);
         for ($i = 0; $i < $pages; $i++) {
+            $this->settings->log("Working on page " . $i);
             $img->setIteratorIndex($i);
 
             $img->setImageCompressionQuality(100);
@@ -105,6 +110,7 @@ class PdfToZplConverter implements ZplConverterService
         if (! $rawData) {
             throw new Exception("File {$filepath} does not exist!");
         }
+        $this->settings->log("File Size for {$filepath} is " . strlen($rawData));
 
         return $this->convertFromBlob($rawData);
     }
