@@ -68,7 +68,7 @@ class ConverterSettings
 
         /** @disregard intelephense(P1009) */
         $formats = \imagick::queryFormats();
-        if (! array_key_exists("PDF", $formats)) {
+        if (! array_search("PDF", $formats)) {
             throw new Exception("pdf-to-zpl: Format PDF not allowed for Imagick (try installing ghostscript: sudo apt-get install -y ghostscript)");
         }
     }
