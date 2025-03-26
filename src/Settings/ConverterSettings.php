@@ -4,7 +4,6 @@ namespace Faerber\PdfToZpl\Settings;
 
 use Exception;
 use Faerber\PdfToZpl\Images\{ImageProcessorOption, ImageProcessor};
-use Symfony\Component\EventDispatcher\DependencyInjection\ExtractingEventDispatcher;
 
 /** Settings for the PDF to ZPL conversion */
 class ConverterSettings
@@ -64,6 +63,12 @@ class ConverterSettings
 
         if (! extension_loaded('imagick')) {
             throw new Exception("pdf-to-zpl: You must install the Imagick image library");
+        }
+
+        /** @disregard intelephense(P1009) */
+        $formats = \imagick::queryFormats();
+        if (! array_search("PDF", $formats)) {
+            throw new Exception("pdf-to-zpl: Format PDF not allowed for Imagick (try installing ghostscript: sudo apt-get install -y ghostscript)");
         }
     }
 

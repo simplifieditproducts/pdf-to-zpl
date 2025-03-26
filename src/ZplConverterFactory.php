@@ -20,8 +20,10 @@ class ZplConverterFactory
     {
         $ext = pathinfo($filepath, PATHINFO_EXTENSION);
         $settings ??= new ConverterSettings();
+        $settings->log("Converting {$filepath} ({$ext})");
         foreach (self::CONVERTER_SERVICES as $service) {
             if (in_array($ext, $service::canConvert())) {
+                $settings->log("Using {$service} converter");
                 return new $service($settings);
             }
         }
