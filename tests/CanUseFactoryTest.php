@@ -6,10 +6,8 @@ use Faerber\PdfToZpl\Settings\ConverterSettings;
 use Faerber\PdfToZpl\ZplConverterFactory;
 use PHPUnit\Framework\TestCase;
 
-final class CanUseFactoryTest extends TestCase
-{
-    public function testCanUseFactoryForImage()
-    {
+final class CanUseFactoryTest extends TestCase {
+    public function testCanUseFactoryForImage() {
         $duck = TestUtils::testData("duck.png");
         $converter = ZplConverterFactory::converterFromFile($duck, new ConverterSettings(verboseLogs: true));
         $pages = $converter->convertFromFile($duck);
@@ -28,8 +26,7 @@ final class CanUseFactoryTest extends TestCase
     }
 
 
-    public function testCanUseFactoryForPdf(): void
-    {
+    public function testCanUseFactoryForPdf(): void {
         $pdf = TestUtils::testData("endicia-shipping-label.pdf");
         $converter = ZplConverterFactory::converterFromFile($pdf, new ConverterSettings(verboseLogs: true));
         $pages = $converter->convertFromFile($pdf);

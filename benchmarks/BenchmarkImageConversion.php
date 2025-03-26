@@ -9,15 +9,12 @@ use Faerber\PdfToZpl\Settings\ConverterSettings;
  * @Revs(2)
  * @Iterations(2)
  */
-class BenchmarkPdfConversion
-{
-    public static function testFile(string $name): string
-    {
+class BenchmarkPdfConversion {
+    public static function testFile(string $name): string {
         return __DIR__ . "/../test_data/{$name}";
     }
 
-    private function convertFile(string $name, ConverterSettings $settings)
-    {
+    private function convertFile(string $name, ConverterSettings $settings) {
         $converter = new ImageToZplConverter(
             $settings
         );
@@ -28,16 +25,14 @@ class BenchmarkPdfConversion
     /**
      * @Subject
      */
-    public function doConvertGif()
-    {
+    public function doConvertGif() {
         $this->convertFile("ups-label-as-gif.gif", new ConverterSettings());
     }
 
     /**
      * @Subject
      */
-    public function doConvertPng()
-    {
+    public function doConvertPng() {
         $this->convertFile("ups-label-as-png.png", new ConverterSettings());
     }
 
@@ -45,8 +40,7 @@ class BenchmarkPdfConversion
     /**
      * @Subject
      */
-    public function doConvertDuck()
-    {
+    public function doConvertDuck() {
         $this->convertFile("duck.png", new ConverterSettings());
     }
 }

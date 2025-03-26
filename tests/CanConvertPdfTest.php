@@ -7,10 +7,8 @@ use Faerber\PdfToZpl\PdfToZplConverter;
 use Faerber\PdfToZpl\Settings\ConverterSettings;
 use PHPUnit\Framework\TestCase;
 
-final class CanConvertPdfTest extends TestCase
-{
-    public function testCanConvertEndiciaPdf(): void
-    {
+final class CanConvertPdfTest extends TestCase {
+    public function testCanConvertEndiciaPdf(): void {
         $converter = new PdfToZplConverter(new ConverterSettings(verboseLogs: true));
         $pages = $converter->convertFromFile(TestUtils::testData("endicia-shipping-label.pdf"));
         $expectedPageCount = 3;
@@ -28,8 +26,7 @@ final class CanConvertPdfTest extends TestCase
         );
     }
 
-    public function testCanConvertDonkeyPdf(): void
-    {
+    public function testCanConvertDonkeyPdf(): void {
         $converter = new PdfToZplConverter(new ConverterSettings(verboseLogs: true));
         $pages = $converter->convertFromFile(TestUtils::testData("donkey.pdf"));
         $expectedPageCount = 9;
