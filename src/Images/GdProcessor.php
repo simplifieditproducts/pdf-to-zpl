@@ -7,33 +7,27 @@ use Faerber\PdfToZpl\ImagickStub;
 use Faerber\PdfToZpl\Settings\ConverterSettings;
 use GdImage;
 
-class GdProcessor implements ImageProcessor
-{
+class GdProcessor implements ImageProcessor {
     private GdImage $img;
     private ConverterSettings $settings;
 
-    public function __construct(ConverterSettings $settings)
-    {
+    public function __construct(ConverterSettings $settings) {
         $this->settings = $settings;
     }
 
-    public function width(): int
-    {
+    public function width(): int {
         return imagesx($this->img);
     }
 
-    public function height(): int
-    {
+    public function height(): int {
         return imagesy($this->img);
     }
 
-    public function isPixelBlack(int $x, int $y): bool
-    {
+    public function isPixelBlack(int $x, int $y): bool {
         return (imagecolorat($this->img, $x, $y) & 0xFF) < 127;
     }
 
-    public function readBlob(string $data): static
-    {
+    public function readBlob(string $data): static {
         $this->img = imagecreatefromstring($data);
         if (! $this->img) {
             throw new Exception("Failure!");
@@ -43,8 +37,7 @@ class GdProcessor implements ImageProcessor
         return $this;
     }
 
-    public function scaleImage(): static
-    {
+    public function scaleImage(): static {
         if (!$this->settings->scale->shouldResize() || $this->width() === $this->settings->labelWidth) {
             return $this;
         }
@@ -84,16 +77,14 @@ class GdProcessor implements ImageProcessor
         return $this;
     }
 
-    public function rotateImage(): static
-    {
+    public function rotateImage(): static {
         if ($this->settings->rotateDegrees) {
             $this->img = imagerotate($this->img, $this->settings->rotateDegrees, 0);
         }
         return $this;
     }
 
-    public function processorType(): ImageProcessorOption
-    {
+    public function processorType(): ImageProcessorOption {
         return ImageProcessorOption::Gd;
     }
 }

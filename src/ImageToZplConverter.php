@@ -12,8 +12,7 @@ use Tightenco\Collect\Support\Collection;
  *
  * @see https://github.com/himansuahm/php-zpl-converter
  */
-class ImageToZplConverter implements ZplConverterService
-{
+class ImageToZplConverter implements ZplConverterService {
     public ConverterSettings $settings;
 
     public function __construct(
@@ -26,8 +25,7 @@ class ImageToZplConverter implements ZplConverterService
     public const END_CMD = "^XZ";
     private const ENCODE_CMD = "^GFA";
 
-    public function convertImageToZpl(ImageProcessor $image): string
-    {
+    public function convertImageToZpl(ImageProcessor $image): string {
         // Width in bytes
         $width = (int) ceil($image->width() / 8);
         $height = $image->height();
@@ -58,13 +56,13 @@ class ImageToZplConverter implements ZplConverterService
         // Prepare ZPL command parameters
         $byteCount = $width * $height;
         $parameters = new Collection([
-            self::ENCODE_CMD, 
-            $byteCount, 
-            $byteCount, 
-            $width, 
+            self::ENCODE_CMD,
+            $byteCount,
+            $byteCount,
+            $width,
             $bitmap
         ]);
-        
+
         return (new Collection([
             self::START_CMD,
             $parameters->implode(","),
@@ -75,26 +73,22 @@ class ImageToZplConverter implements ZplConverterService
     /**
      * @param string $rawImage The binary data of an image saved as a string (can be GIF, PNG or JPEG)
      */
-    private function loadFromRawImage(string $rawImage, ImageProcessor $processor): ImageProcessor
-    {
+    private function loadFromRawImage(string $rawImage, ImageProcessor $processor): ImageProcessor {
         return $processor->readBlob($rawImage);
     }
 
     /** This can just be a string (the first few bytes say if its a GIF or PNG or whatever) */
-    public function rawImageToZpl(string $rawImage): string
-    {
+    public function rawImageToZpl(string $rawImage): string {
         $img = $this->loadFromRawImage($rawImage, $this->settings->imageProcessor);
         $img->scaleImage($this->settings);
         return $this->convertImageToZpl($img);
     }
 
-    public function convertFromBlob(string $rawData): array
-    {
+    public function convertFromBlob(string $rawData): array {
         return [$this->rawImageToZpl($rawData)];
     }
 
-    public function convertFromFile(string $filepath): array
-    {
+    public function convertFromFile(string $filepath): array {
         $rawData = @file_get_contents($filepath);
         if (! $rawData) {
             throw new Exception("Invalid file {$filepath}");
@@ -102,19 +96,16 @@ class ImageToZplConverter implements ZplConverterService
         return $this->convertFromBlob($rawData);
     }
 
-    public static function canConvert(): array
-    {
+    public static function canConvert(): array {
         return ["png", "gif"];
     }
 
     /** Run Line Encoder (replace repeating characters) */
-    private function compressRow(string $row): string
-    {
+    private function compressRow(string $row): string {
         return preg_replace_callback('/(.)(\1{2,})/', fn ($matches) => $this->compressSequence($matches[0]), $row);
     }
 
-    private function compressSequence(string $sequence): string
-    {
+    private function compressSequence(string $sequence): string {
         $repeat = strlen($sequence);
         $count = '';
 

@@ -6,8 +6,7 @@ use Exception;
 use Faerber\PdfToZpl\Images\{ImageProcessorOption, ImageProcessor};
 
 /** Settings for the PDF to ZPL conversion */
-class ConverterSettings
-{
+class ConverterSettings {
     public const DEFAULT_LABEL_WIDTH = 812;
     public const DEFAULT_LABEL_HEIGHT = 1218;
     public const DEFAULT_LABEL_DPI = 203;
@@ -49,14 +48,13 @@ class ConverterSettings
         $this->labelHeight = $labelHeight;
         $this->imageFormat = $imageFormat;
         $this->rotateDegrees = $rotateDegrees;
-        $this->verboseLogs = $verboseLogs; 
+        $this->verboseLogs = $verboseLogs;
         $this->verifyDependencies($imageProcessorOption);
 
         $this->imageProcessor = $imageProcessorOption->processor($this);
     }
 
-    private function verifyDependencies(ImageProcessorOption $option)
-    {
+    private function verifyDependencies(ImageProcessorOption $option) {
         if (! extension_loaded('gd') && $option === ImageProcessorOption::Gd) {
             throw new Exception("pdf-to-zpl: You must install the GD image library or change imageProcessorOption to ImageProcessOption::Imagick");
         }
@@ -72,17 +70,18 @@ class ConverterSettings
         }
     }
 
-    public static function default()
-    {
+    public static function default() {
         return new self();
     }
 
     public function log(...$messages) {
-        if (! $this->verboseLogs) return; 
+        if (! $this->verboseLogs) {
+            return;
+        }
         foreach ($messages as $message) {
-            echo "[pdf-to-zpl logs]: "; 
+            echo "[pdf-to-zpl logs]: ";
             echo $message;
             echo "\n";
-        } 
+        }
     }
 }

@@ -8,16 +8,14 @@ use Faerber\PdfToZpl\PdfToZplConverter;
 use Faerber\PdfToZpl\Settings\ConverterSettings;
 use Faerber\PdfToZpl\ZplConverterService;
 
-class ZplConverterFactory
-{
+class ZplConverterFactory {
     /** @var class-string<ZplConverterService>[] */
-    const CONVERTER_SERVICES = [
-        PdfToZplConverter::class, 
+    public const CONVERTER_SERVICES = [
+        PdfToZplConverter::class,
         ImageToZplConverter::class,
     ];
 
-    public static function converterFromFile(string $filepath, ConverterSettings|null $settings = null): ZplConverterService
-    {
+    public static function converterFromFile(string $filepath, ConverterSettings|null $settings = null): ZplConverterService {
         $ext = pathinfo($filepath, PATHINFO_EXTENSION);
         $settings ??= new ConverterSettings();
         $settings->log("Converting {$filepath} ({$ext})");

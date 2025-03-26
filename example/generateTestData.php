@@ -28,8 +28,7 @@ $landscapePdfConverter = new PdfToZplConverter(new ConverterSettings(
     rotateDegrees: 90,
 ));
 
-function downloadPages(array $pages, string $name)
-{
+function downloadPages(array $pages, string $name) {
     global $testOutput;
     foreach ($pages as $index => $page) {
         assert(str_starts_with($page, "^XA^GFA,"));
@@ -53,8 +52,7 @@ function downloadPages(array $pages, string $name)
 }
 
 
-function convertPdfToPages(string $pdf, string $name, PdfToZplConverter $converter)
-{
+function convertPdfToPages(string $pdf, string $name, PdfToZplConverter $converter) {
     echo "Converting PDF {$name}\n";
     global $testData, $testOutput;
     $pdfFile = $testData . "/" . $pdf;
@@ -62,8 +60,7 @@ function convertPdfToPages(string $pdf, string $name, PdfToZplConverter $convert
     downloadPages($pages, $name);
 }
 
-function convertImageToPages(string $image, string $name)
-{
+function convertImageToPages(string $image, string $name) {
     echo "Converting Image {$name}\n";
     global $imageConverter, $testData, $testOutput;
     $imageFile = $testData . "/" . $image;
@@ -72,31 +69,26 @@ function convertImageToPages(string $image, string $name)
 }
 
 
-function convertEndiciaLabel()
-{
+function convertEndiciaLabel() {
     global $pdfConverter;
     convertPdfToPages("endicia-shipping-label.pdf", "expected_label", $pdfConverter);
 }
 
-function convertDonkeyPdf()
-{
+function convertDonkeyPdf() {
     global $pdfConverter;
     convertPdfToPages("donkey.pdf", "expected_donkey", $pdfConverter);
 }
 
-function convertLandscapePdf()
-{
+function convertLandscapePdf() {
     global $landscapePdfConverter;
     convertPdfToPages("usps-label-landscape.pdf", "expected_usps_landscape", $landscapePdfConverter);
 }
 
-function convertDuckImage()
-{
+function convertDuckImage() {
     convertImageToPages("duck.png", "expected_duck");
 }
 
-function purgeOld()
-{
+function purgeOld() {
     global $testOutput;
     foreach (scandir($testOutput) as $file) {
         if (str_starts_with($file, ".")) {
