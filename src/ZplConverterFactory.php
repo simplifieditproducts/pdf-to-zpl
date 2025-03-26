@@ -11,8 +11,8 @@ use Faerber\PdfToZpl\ZplConverterService;
 class ZplConverterFactory
 {
     /** @var class-string<ZplConverterService>[] */
-    const CONVERTER_SERVICES = [
-        PdfToZplConverter::class, 
+    public const CONVERTER_SERVICES = [
+        PdfToZplConverter::class,
         ImageToZplConverter::class,
     ];
 

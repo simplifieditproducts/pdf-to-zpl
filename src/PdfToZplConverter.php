@@ -64,11 +64,11 @@ class PdfToZplConverter implements ZplConverterService
                 throw new Exception("You need to enable PDF reading and writing in your Imagick settings (see docs for more details)", code: 10, previous: $e);
             }
             // No special handling
-            throw $e; 
+            throw $e;
         }
 
         $pages = $img->getNumberImages();
-        $this->settings->log("Page count = " . $pages); 
+        $this->settings->log("Page count = " . $pages);
         $processor = new ImagickProcessor($img, $this->settings);
 
         $images = new Collection([]);

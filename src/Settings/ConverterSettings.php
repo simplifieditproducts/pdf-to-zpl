@@ -49,7 +49,7 @@ class ConverterSettings
         $this->labelHeight = $labelHeight;
         $this->imageFormat = $imageFormat;
         $this->rotateDegrees = $rotateDegrees;
-        $this->verboseLogs = $verboseLogs; 
+        $this->verboseLogs = $verboseLogs;
         $this->verifyDependencies($imageProcessorOption);
 
         $this->imageProcessor = $imageProcessorOption->processor($this);
@@ -77,12 +77,15 @@ class ConverterSettings
         return new self();
     }
 
-    public function log(...$messages) {
-        if (! $this->verboseLogs) return; 
+    public function log(...$messages)
+    {
+        if (! $this->verboseLogs) {
+            return;
+        }
         foreach ($messages as $message) {
-            echo "[pdf-to-zpl logs]: "; 
+            echo "[pdf-to-zpl logs]: ";
             echo $message;
             echo "\n";
-        } 
+        }
     }
 }

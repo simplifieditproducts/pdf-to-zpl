@@ -11,7 +11,7 @@ final class CanRotatePdfTest extends TestCase
     public function testCanRotateLandscapePdf()
     {
         $converter = new PdfToZplConverter(new ConverterSettings(
-            verboseLogs: true, 
+            verboseLogs: true,
             rotateDegrees: 90,
         ));
         $pages = $converter->convertFromFile(TestUtils::testData("usps-label-landscape.pdf"));
