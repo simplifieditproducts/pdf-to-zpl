@@ -65,6 +65,12 @@ class ConverterSettings
         if (! extension_loaded('imagick')) {
             throw new Exception("pdf-to-zpl: You must install the Imagick image library");
         }
+
+        /** @disregard intelephense(P1009) */
+        $formats = \imagick::queryFormats();
+        if (! array_key_exists("PDF", $formats)) {
+            throw new Exception("pdf-to-zpl: Format PDF not allowed for Imagick (try installing ghostscript: sudo apt-get install -y ghostscript)");
+        }
     }
 
     public static function default()
