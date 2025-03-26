@@ -4,7 +4,6 @@ namespace Faerber\PdfToZpl\Settings;
 
 use Exception;
 use Faerber\PdfToZpl\Images\{ImageProcessorOption, ImageProcessor};
-use Symfony\Component\EventDispatcher\DependencyInjection\ExtractingEventDispatcher;
 
 /** Settings for the PDF to ZPL conversion */
 class ConverterSettings
