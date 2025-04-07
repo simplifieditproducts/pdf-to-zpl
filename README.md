@@ -4,7 +4,7 @@ PDF to ZPL
 <a href="https://github.com/benfaerber/pdf-to-zpl/actions"><img src="https://github.com/benfaerber/pdf-to-zpl/actions/workflows/php.yml/badge.svg" /></a>
 <a href="LICENSE"><img src="https://img.shields.io/github/license/benfaerber/pdf-to-zpl?color=yellowgreen" /></a>
 </h1>
-
+confi
 ![donkey pdf](./static/donkey-label.jpg "A label created with pdf-to-zpl")
 
 Convert a PDF into the ZPL format. Allowing for custom images, alphabets like Hebrew, Arabic and Cyrillic (without messing with fonts on the printer) and multipage shipping labels!
@@ -61,7 +61,11 @@ $converter = new PdfToZplConverter(
 ### Imagick Settings
 You may need to enable PDF permission in your Imagick settings.
 
-The easiest way to do this is by running the setup shell script: `sudo ./scripts/configure-imagick.sh`
+The easiest way to do this is by running the setup shell script:
+```
+sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/benfaerber/pdf-to-zpl/refs/heads/master/scripts/configure-imagick.sh)"
+```
+(This downloads and runs the script directly from this repo)
 
 If the script doesn't meet your needs you can perform the change manually.
 First edit your Imagick Policy file with: `sudo nano "/etc/$(ls /etc/ | grep ImageMagick)/policy.xml"`
