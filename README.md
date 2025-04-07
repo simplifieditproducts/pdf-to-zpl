@@ -6,7 +6,6 @@ PDF to ZPL
 </h1>
 
 <img src="./static/donkey-label.jpg" alt="A label created with pdf-to-zpl" />
-<p style="color: gray; font-size: 0.9em; margin-top: -10px;">A label created with pdf-to-zpl</p>
 
 Convert a PDF into the ZPL format. Allowing for custom images, alphabets like Hebrew, Arabic and Cyrillic (without messing with fonts on the printer) and multipage shipping labels!
 
