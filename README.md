@@ -1,6 +1,9 @@
-# PDF to ZPL [![Packagist](https://img.shields.io/packagist/v/faerber/pdf-to-zpl)](https://packagist.org/packages/faerber/pdf-to-zpl) [![Github Actions](https://github.com/benfaerber/pdf-to-zpl/actions/workflows/php.yml/badge.svg)](https://github.com/benfaerber/pdf-to-zpl/actions) [![License](https://img.shields.io/github/license/benfaerber/pdf-to-zpl?color=yellowgreen)](LICENSE)
-![donkey pdf](./static/donkey-label.jpg "A label created with pdf-to-zpl")
-
+<h1>
+PDF to ZPL
+<a href="https://packagist.org/packages/faerber/pdf-to-zpl"><img src="https://img.shields.io/packagist/v/faerber/pdf-to-zpl" /></a>
+<a href="https://github.com/benfaerber/pdf-to-zpl/actions"><img src="https://github.com/benfaerber/pdf-to-zpl/actions/workflows/php.yml/badge.svg" /></a>
+<a href="LICENSE"><img src="https://img.shields.io/github/license/benfaerber/pdf-to-zpl?color=yellowgreen" /></a>
+</h1>
 
 Convert a PDF into the ZPL format. Allowing for custom images, alphabets like Hebrew, Arabic and Cyrillic (without messing with fonts on the printer) and multipage shipping labels!
 
