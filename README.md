@@ -5,6 +5,8 @@ PDF to ZPL
 <a href="LICENSE"><img src="https://img.shields.io/github/license/benfaerber/pdf-to-zpl?color=yellowgreen" /></a>
 </h1>
 
+![donkey pdf](./static/donkey-label.jpg "A label created with pdf-to-zpl")
+
 Convert a PDF into the ZPL format. Allowing for custom images, alphabets like Hebrew, Arabic and Cyrillic (without messing with fonts on the printer) and multipage shipping labels!
 
 ## Gettings Started:
