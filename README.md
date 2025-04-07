@@ -1,4 +1,4 @@
-# PDF to ZPL [![Packagist](https://img.shields.io/packagist/v/faerber/pdf-to-zpl)](https://packagist.org/packages/faerber/pdf-to-zpl) [![Github Actions](https://github.com/benfaerber/pdf-to-zpl/actions/workflows/php.yml/badge.svg)](https://github.com/benfaerber/pdf-to-zpl/actions)
+# PDF to ZPL [![Packagist](https://img.shields.io/packagist/v/faerber/pdf-to-zpl)](https://packagist.org/packages/faerber/pdf-to-zpl) [![Github Actions](https://github.com/benfaerber/pdf-to-zpl/actions/workflows/php.yml/badge.svg)](https://github.com/benfaerber/pdf-to-zpl/actions) [![License](https://img.shields.io/github/license/benfaerber/pdf-to-zpl?color=yellowgreen)](LICENSE)
 ![donkey pdf](./static/donkey-label.jpg "A label created with pdf-to-zpl")
 
 
