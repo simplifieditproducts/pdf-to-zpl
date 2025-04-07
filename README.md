@@ -63,7 +63,7 @@ $converter = new PdfToZplConverter(
 You may need to enable PDF permission in your Imagick settings.
 
 The easiest way to do this is by running the setup shell script:
-```
+```sh
 sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/benfaerber/pdf-to-zpl/refs/heads/master/scripts/configure-imagick.sh)"
 ```
 (This downloads and runs the script directly from this repo)
@@ -72,11 +72,11 @@ If the script doesn't meet your needs you can perform the change manually.
 First edit your Imagick Policy file with: `sudo nano "/etc/$(ls /etc/ | grep ImageMagick)/policy.xml"`
 
 Find this line and ensure the rights are set to `read | write`:
-```
+```xml
 <policy domain="coder" rights="none" pattern="PDF" />
 ```
 Change to:
-```
+```xml
 <policy domain="coder" rights="read | write" pattern="PDF" />
 ```
 If this line doesn't exist at all, add it. You'll only run into this with tiny linux boxes like Github Actions. 
